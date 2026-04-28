@@ -1,0 +1,221 @@
+generator client {
+  provider   = "prisma-client-js"
+  engineType = "library"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Merchant {
+  id              Int      @id @default(autoincrement())
+  merchantId      String   @unique
+  apiKey          String
+  apiSecret       String
+  name            String
+  firstName       String
+  lastName        String
+  email           String
+  phone           String
+  callbackUrl     String   @default("")
+  aadhaar         String   @default("")
+  pan             String   @default("")
+  pincode         String   @default("")
+  city            String   @default("")
+  state           String   @default("")
+  personalAddress String   @default("")
+  companyName     String
+  gstNumber       String   @default("")
+  companyType     String   @default("")
+  companyWebsite  String   @default("")
+  officeAddress   String   @default("")
+  status          String   @default("ACTIVE")
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  users           User[]
+  apiTokens       MerchantApiToken[]
+  walletBalance   MerchantWalletBalance?
+  commissionRules MerchantCommissionSetting[]
+}
+
+model Profile {
+  id              Int      @id @default(autoincrement())
+  userId          Int?     @unique
+  firstName       String   @default("")
+  lastName        String   @default("")
+  dob             String   @default("")
+  mobile          String   @default("")
+  email           String   @default("")
+  state           String   @default("")
+  city            String   @default("")
+  pinCode         String   @default("")
+  address         String   @default("")
+  landmark        String   @default("")
+  aadhaar         String   @default("")
+  pan             String   @default("")
+  profilePhotoUrl String   @db.LongText
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  user User? @relation(fields: [userId], references: [id], onDelete: SetNull)
+}
+
+model PayInOrder {
+  id             Int      @id @default(autoincrement())
+  merchantId     String
+  clientRefNo    String   @unique
+  amount         Decimal  @db.Decimal(12, 2)
+  charge         Decimal  @db.Decimal(12, 2) @default(0)
+  gst            Decimal  @db.Decimal(12, 2) @default(0)
+  balance        Decimal  @db.Decimal(12, 2) @default(0)
+  customerName   String   @default("")
+  customerPhone  String
+  customerEmail  String   @default("")
+  txnId          String   @default("")
+  bankRrn        String   @default("")
+  provider       String   @default("OPENMONEY")
+  providerRef    String   @default("")
+  paymentUrl     String   @default("")
+  qrString       String   @db.LongText
+  status         String   @default("PENDING")
+  providerRaw    String   @db.LongText
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  @@index([merchantId])
+  @@index([status])
+}
+
+model PayoutOrder {
+  id             Int      @id @default(autoincrement())
+  merchantId     String
+  clientRefNo    String   @unique
+  amount         Decimal  @db.Decimal(12, 2)
+  charge         Decimal  @db.Decimal(12, 2) @default(0)
+  gst            Decimal  @db.Decimal(12, 2) @default(0)
+  balance        Decimal  @db.Decimal(12, 2) @default(0)
+  customerName   String   @default("")
+  customerPhone  String
+  customerEmail  String   @default("")
+  txnId          String   @default("")
+  bankRrn        String   @default("")
+  provider       String   @default("OPENMONEY")
+  providerRef    String   @default("")
+  paymentUrl     String   @default("")
+  qrString       String   @db.LongText
+  status         String   @default("PENDING")
+  providerRaw    String   @db.LongText
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  @@index([merchantId])
+  @@index([status])
+}
+
+model User {
+  id           Int      @id @default(autoincrement())
+  email        String   @unique
+  passwordHash String
+  role         UserRole
+  merchantId   String?
+  isActive     Boolean  @default(true)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  merchant Merchant? @relation(fields: [merchantId], references: [merchantId], onDelete: SetNull)
+  profile  Profile?
+
+  @@index([role])
+  @@index([merchantId])
+}
+
+enum UserRole {
+  ADMIN
+  CLIENT
+}
+
+enum CommissionType {
+  PAYIN
+  PAYOUT
+}
+
+enum WalletType {
+  PAYIN
+  PAYOUT
+}
+
+enum WalletActionType {
+  CREDIT
+  DEBIT
+}
+
+model MerchantApiToken {
+  id         Int      @id @default(autoincrement())
+  merchantId String
+  provider   String   @default("OPENMONEY")
+  token      String   @db.VarChar(512)
+  expiresAt  DateTime
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  merchant Merchant @relation(fields: [merchantId], references: [merchantId], onDelete: Cascade)
+
+  @@index([merchantId])
+  @@index([token])
+  @@index([expiresAt])
+}
+
+model MerchantWalletBalance {
+  id            Int      @id @default(autoincrement())
+  merchantId    String   @unique
+  payinBalance  Decimal  @db.Decimal(12, 2) @default(0)
+  payoutBalance Decimal  @db.Decimal(12, 2) @default(0)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  merchant Merchant @relation(fields: [merchantId], references: [merchantId], onDelete: Cascade)
+
+  @@index([merchantId])
+}
+
+model AdminWalletActivityLog {
+  id            Int              @id @default(autoincrement())
+  adminUserId   Int
+  adminEmail    String
+  merchantId    String
+  walletType    WalletType
+  actionType    WalletActionType
+  amount        Decimal          @db.Decimal(12, 2)
+  balanceBefore Decimal          @db.Decimal(12, 2)
+  balanceAfter  Decimal          @db.Decimal(12, 2)
+  narration     String           @db.VarChar(500)
+  createdAt     DateTime         @default(now())
+
+  @@index([merchantId])
+  @@index([adminUserId])
+  @@index([walletType])
+  @@index([actionType])
+  @@index([createdAt])
+}
+
+model MerchantCommissionSetting {
+  id             Int            @id @default(autoincrement())
+  merchantId     String
+  provider       String         @default("OPENMONEY")
+  commissionType CommissionType
+  fromAmount     Decimal        @db.Decimal(12, 2)
+  toAmount       Decimal        @db.Decimal(12, 2)
+  commission     Decimal        @db.Decimal(12, 2)
+  gst            Decimal        @db.Decimal(12, 2) @default(0)
+  isSurcharge    Boolean        @default(false)
+  createdAt      DateTime       @default(now())
+  updatedAt      DateTime       @updatedAt
+
+  merchant Merchant @relation(fields: [merchantId], references: [merchantId], onDelete: Cascade)
+
+  @@index([merchantId])
+  @@index([commissionType])
+  @@index([provider])
+  @@unique([merchantId, provider, commissionType, fromAmount, toAmount], name: "merchant_provider_type_range_unique")
+}
