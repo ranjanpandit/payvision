@@ -6,6 +6,7 @@
     "dev": "next dev --webpack",
     "dev:turbo": "next dev --turbopack",
     "clean": "powershell -Command \"if (Test-Path .next) { Remove-Item -LiteralPath .next -Recurse -Force }\"",
+    "postinstall": "prisma generate",
     "build": "next build",
     "start": "next start",
     "lint": "eslint"
