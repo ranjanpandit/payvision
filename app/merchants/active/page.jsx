@@ -161,10 +161,22 @@ export default function ActiveMerchantPage() {
   }
 
   async function copyText(text, key) {
+    const str = String(text || "");
     try {
-      await navigator.clipboard.writeText(String(text || ""));
+      if (navigator.clipboard && window.isSecureContext) {
+        await navigator.clipboard.writeText(str);
+      } else {
+        const el = document.createElement("textarea");
+        el.value = str;
+        el.style.cssText = "position:fixed;top:0;left:0;opacity:0;pointer-events:none;";
+        document.body.appendChild(el);
+        el.focus();
+        el.select();
+        document.execCommand("copy");
+        document.body.removeChild(el);
+      }
       setCopiedKey(key);
-      setTimeout(() => setCopiedKey(""), 1200);
+      setTimeout(() => setCopiedKey(""), 1500);
     } catch {
       setMessage("Copy failed. Please copy manually.");
     }

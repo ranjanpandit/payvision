@@ -33,10 +33,30 @@ model Merchant {
   status          String   @default("ACTIVE")
   createdAt       DateTime @default(now())
   updatedAt       DateTime @updatedAt
+
   users           User[]
   apiTokens       MerchantApiToken[]
   walletBalance   MerchantWalletBalance?
   commissionRules MerchantCommissionSetting[]
+  apiCredential   MerchantApiCredential?
+
+  @@map("merchant")
+}
+
+model MerchantApiCredential {
+  id                Int      @id @default(autoincrement())
+  merchantId        String   @unique
+  ipAddress         String   @default("")
+  ipAddressStatus   String   @default("INACTIVE")
+  pgCallbackUrl     String   @default("")
+  payoutCallbackUrl String   @default("")
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  merchant Merchant @relation(fields: [merchantId], references: [merchantId], onDelete: Cascade)
+
+  @@index([merchantId])
+  @@map("merchantapicredential")
 }
 
 model Profile {
@@ -59,68 +79,73 @@ model Profile {
   updatedAt       DateTime @updatedAt
 
   user User? @relation(fields: [userId], references: [id], onDelete: SetNull)
+
+  @@map("profile")
 }
 
 model PayInOrder {
-  id             Int      @id @default(autoincrement())
-  merchantId     String
-  clientRefNo    String   @unique
-  amount         Decimal  @db.Decimal(12, 2)
-  charge         Decimal  @db.Decimal(12, 2) @default(0)
-  gst            Decimal  @db.Decimal(12, 2) @default(0)
-  balance        Decimal  @db.Decimal(12, 2) @default(0)
-  customerName   String   @default("")
-  customerPhone  String
-  customerEmail  String   @default("")
-  txnId          String   @default("")
-  bankRrn        String   @default("")
-  provider       String   @default("OPENMONEY")
-  providerRef    String   @default("")
-  paymentUrl     String   @default("")
-  qrString       String   @db.LongText
-  status         String   @default("PENDING")
-  providerRaw    String   @db.LongText
-  createdAt      DateTime @default(now())
-  updatedAt      DateTime @updatedAt
+  id            Int      @id @default(autoincrement())
+  merchantId    String
+  clientRefNo   String   @unique
+  amount        Decimal  @db.Decimal(12, 2)
+  charge        Decimal  @default(0) @db.Decimal(12, 2)
+  gst           Decimal  @default(0) @db.Decimal(12, 2)
+  balance       Decimal  @default(0) @db.Decimal(12, 2)
+  customerName  String   @default("")
+  customerPhone String
+  customerEmail String   @default("")
+  txnId         String   @default("")
+  bankRrn       String   @default("")
+  provider      String   @default("OPENMONEY")
+  providerRef   String   @default("")
+  paymentUrl    String   @default("")
+  qrString      String   @db.LongText
+  status        String   @default("PENDING")
+  providerRaw   String   @db.LongText
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
 
   @@index([merchantId])
   @@index([status])
+  @@map("payinorder")
 }
 
 model PayoutOrder {
-  id             Int      @id @default(autoincrement())
-  merchantId     String
-  clientRefNo    String   @unique
-  amount         Decimal  @db.Decimal(12, 2)
-  charge         Decimal  @db.Decimal(12, 2) @default(0)
-  gst            Decimal  @db.Decimal(12, 2) @default(0)
-  balance        Decimal  @db.Decimal(12, 2) @default(0)
-  customerName   String   @default("")
-  customerPhone  String
-  customerEmail  String   @default("")
-  txnId          String   @default("")
-  bankRrn        String   @default("")
-  provider       String   @default("OPENMONEY")
-  providerRef    String   @default("")
-  paymentUrl     String   @default("")
-  qrString       String   @db.LongText
-  status         String   @default("PENDING")
-  providerRaw    String   @db.LongText
-  createdAt      DateTime @default(now())
-  updatedAt      DateTime @updatedAt
+  id            Int      @id @default(autoincrement())
+  merchantId    String
+  clientRefNo   String   @unique
+  amount        Decimal  @db.Decimal(12, 2)
+  charge        Decimal  @default(0) @db.Decimal(12, 2)
+  gst           Decimal  @default(0) @db.Decimal(12, 2)
+  balance       Decimal  @default(0) @db.Decimal(12, 2)
+  customerName  String   @default("")
+  customerPhone String
+  customerEmail String   @default("")
+  txnId         String   @default("")
+  bankRrn       String   @default("")
+  provider      String   @default("OPENMONEY")
+  providerRef   String   @default("")
+  paymentUrl    String   @default("")
+  qrString      String   @db.LongText
+  status        String   @default("PENDING")
+  providerRaw   String   @db.LongText
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
 
   @@index([merchantId])
   @@index([status])
+  @@map("payoutorder")
 }
 
 model User {
   id           Int      @id @default(autoincrement())
   email        String   @unique
+  merchantId   String?
   passwordHash String
   role         UserRole
-  merchantId   String?
   isActive     Boolean  @default(true)
   createdAt    DateTime @default(now())
+  tpin         String?
   updatedAt    DateTime @updatedAt
 
   merchant Merchant? @relation(fields: [merchantId], references: [merchantId], onDelete: SetNull)
@@ -128,26 +153,7 @@ model User {
 
   @@index([role])
   @@index([merchantId])
-}
-
-enum UserRole {
-  ADMIN
-  CLIENT
-}
-
-enum CommissionType {
-  PAYIN
-  PAYOUT
-}
-
-enum WalletType {
-  PAYIN
-  PAYOUT
-}
-
-enum WalletActionType {
-  CREDIT
-  DEBIT
+  @@map("user")
 }
 
 model MerchantApiToken {
@@ -164,19 +170,21 @@ model MerchantApiToken {
   @@index([merchantId])
   @@index([token])
   @@index([expiresAt])
+  @@map("merchantapitoken")
 }
 
 model MerchantWalletBalance {
   id            Int      @id @default(autoincrement())
   merchantId    String   @unique
-  payinBalance  Decimal  @db.Decimal(12, 2) @default(0)
-  payoutBalance Decimal  @db.Decimal(12, 2) @default(0)
+  payinBalance  Decimal  @default(0) @db.Decimal(12, 2)
+  payoutBalance Decimal  @default(0) @db.Decimal(12, 2)
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
 
   merchant Merchant @relation(fields: [merchantId], references: [merchantId], onDelete: Cascade)
 
   @@index([merchantId])
+  @@map("merchantwalletbalance")
 }
 
 model AdminWalletActivityLog {
@@ -197,6 +205,7 @@ model AdminWalletActivityLog {
   @@index([walletType])
   @@index([actionType])
   @@index([createdAt])
+  @@map("adminwalletactivitylog")
 }
 
 model MerchantCommissionSetting {
@@ -207,7 +216,7 @@ model MerchantCommissionSetting {
   fromAmount     Decimal        @db.Decimal(12, 2)
   toAmount       Decimal        @db.Decimal(12, 2)
   commission     Decimal        @db.Decimal(12, 2)
-  gst            Decimal        @db.Decimal(12, 2) @default(0)
+  gst            Decimal        @default(0) @db.Decimal(12, 2)
   isSurcharge    Boolean        @default(false)
   createdAt      DateTime       @default(now())
   updatedAt      DateTime       @updatedAt
@@ -218,4 +227,25 @@ model MerchantCommissionSetting {
   @@index([commissionType])
   @@index([provider])
   @@unique([merchantId, provider, commissionType, fromAmount, toAmount], name: "merchant_provider_type_range_unique")
+  @@map("merchantcommissionsetting")
+}
+
+enum UserRole {
+  ADMIN
+  CLIENT
+}
+
+enum CommissionType {
+  PAYIN
+  PAYOUT
+}
+
+enum WalletType {
+  PAYIN
+  PAYOUT
+}
+
+enum WalletActionType {
+  CREDIT
+  DEBIT
 }
