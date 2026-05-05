@@ -192,13 +192,13 @@ export default function ActiveMerchantPage() {
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             placeholder="Search by ID, company, name, email"
-            className="w-full md:w-80 rounded-xl border border-slate-300 px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-cyan-500"
+            className="w-full md:w-80 rounded-xl border border-slate-300 px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-indigo-500"
           />
         </div>
 
         <div className="overflow-x-auto rounded-xl border border-slate-200">
           <table className="min-w-full text-sm">
-            <thead className="bg-blue-600 text-white">
+            <thead className="bg-[#0f1f3d] text-white">
               <tr>
                 <th className="px-3 py-2 text-left">No.</th>
                 <th className="px-3 py-2 text-left">Merchant ID</th>
@@ -240,7 +240,7 @@ export default function ActiveMerchantPage() {
                         <button
                           type="button"
                           onClick={() => beginEdit(m)}
-                          className="rounded-lg bg-cyan-600 px-3 py-1 text-xs font-medium text-white"
+                          className="rounded-lg bg-indigo-600 px-3 py-1 text-xs font-medium text-white"
                         >
                           Edit
                         </button>
@@ -397,7 +397,7 @@ export default function ActiveMerchantPage() {
               <button
                 type="submit"
                 disabled={saving}
-                className="rounded-lg bg-gradient-to-r from-blue-600 to-emerald-500 px-4 py-2 text-sm font-medium text-white disabled:opacity-60"
+                className="rounded-lg bg-gradient-to-r from-indigo-600 to-emerald-600 px-4 py-2 text-sm font-medium text-white disabled:opacity-60"
               >
                 {saving ? "Saving..." : "Save Changes"}
               </button>

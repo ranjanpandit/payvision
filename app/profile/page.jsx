@@ -73,7 +73,7 @@ function Field({label,name,value,onChange,onBlur,error,type="text",placeholder="
       {hint&&<p className="text-xs text-slate-400 mt-0.5">{hint}</p>}
       <input type={type} value={value} placeholder={placeholder} maxLength={maxLength}
         onChange={e=>onChange(name,e.target.value)} onBlur={()=>onBlur(name)}
-        className={`mt-1.5 w-full rounded-xl border px-3 py-2.5 text-sm outline-none transition-colors focus:ring-2 focus:ring-cyan-500 ${error?"border-red-400 bg-red-50":"border-slate-200 bg-slate-50 focus:bg-white"}`}
+        className={`mt-1.5 w-full rounded-xl border px-3 py-2.5 text-sm outline-none transition-colors focus:ring-2 focus:ring-indigo-500 ${error?"border-red-400 bg-red-50":"border-slate-200 bg-slate-50 focus:bg-white"}`}
       />
       {error&&<p className="mt-1 flex items-start gap-1 text-xs text-red-600"><span>⚠</span>{error}</p>}
     </div>
@@ -85,7 +85,7 @@ function SelectField({label,name,value,onChange,onBlur,error,options}) {
     <div>
       <label className="text-sm font-semibold text-slate-700">{label}</label>
       <select value={value} onChange={e=>onChange(name,e.target.value)} onBlur={()=>onBlur(name)}
-        className={`mt-1.5 w-full rounded-xl border px-3 py-2.5 text-sm outline-none transition-colors focus:ring-2 focus:ring-cyan-500 ${error?"border-red-400 bg-red-50":"border-slate-200 bg-slate-50 focus:bg-white"}`}>
+        className={`mt-1.5 w-full rounded-xl border px-3 py-2.5 text-sm outline-none transition-colors focus:ring-2 focus:ring-indigo-500 ${error?"border-red-400 bg-red-50":"border-slate-200 bg-slate-50 focus:bg-white"}`}>
         <option value="">— Select State —</option>
         {options.map(o=><option key={o} value={o}>{o}</option>)}
       </select>
@@ -201,7 +201,7 @@ export default function ProfilePage() {
       <form onSubmit={onSubmit} noValidate className="space-y-5">
 
         {/* Hero card */}
-        <div className="rounded-2xl bg-gradient-to-r from-blue-600 to-emerald-500 p-px shadow-sm">
+        <div className="rounded-2xl bg-gradient-to-r from-indigo-600 to-emerald-600 p-px shadow-sm">
           <div className="rounded-2xl bg-white px-5 py-5 flex flex-col sm:flex-row items-center sm:items-start gap-5">
             <div className="relative flex-shrink-0 flex flex-col items-center gap-2">
               <Avatar src={form.profilePhotoUrl} firstName={form.firstName} lastName={form.lastName} size={84}/>
@@ -270,7 +270,7 @@ export default function ProfilePage() {
 
         {/* Actions */}
         <div className="flex items-center gap-3 pb-2">
-          <button type="submit" disabled={saving} className="rounded-xl bg-gradient-to-r from-blue-600 to-emerald-500 px-6 py-2.5 text-sm text-white font-semibold disabled:opacity-60 hover:opacity-90 transition-opacity shadow-sm">
+          <button type="submit" disabled={saving} className="rounded-xl bg-gradient-to-r from-indigo-600 to-emerald-600 px-6 py-2.5 text-sm text-white font-semibold disabled:opacity-60 hover:opacity-90 transition-opacity shadow-sm">
             {saving?"Saving...":"Save Changes"}
           </button>
           <button type="button" onClick={onReset} className="rounded-xl border border-slate-300 bg-white px-6 py-2.5 text-sm text-slate-700 font-semibold hover:bg-slate-50 transition-colors">

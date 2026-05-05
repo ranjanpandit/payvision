@@ -74,7 +74,7 @@ export default function ChangePasswordPage() {
             value={value}
             onChange={e => setForm(p => ({ ...p, [showKey === "current" ? "current" : showKey === "next" ? "next" : "confirm"]: e.target.value }))}
             placeholder={label}
-            className={`w-full rounded-xl border px-3 py-2.5 pr-10 text-sm outline-none focus:ring-2 focus:ring-cyan-500 transition-colors ${errors[showKey === "current" ? "current" : showKey === "next" ? "next" : "confirm"] ? "border-red-400 bg-red-50" : "border-slate-200 bg-slate-50"}`}
+            className={`w-full rounded-xl border px-3 py-2.5 pr-10 text-sm outline-none focus:ring-2 focus:ring-indigo-500 transition-colors ${errors[showKey === "current" ? "current" : showKey === "next" ? "next" : "confirm"] ? "border-red-400 bg-red-50" : "border-slate-200 bg-slate-50"}`}
           />
           <button type="button" onClick={() => setShow(p => ({ ...p, [showKey]: !p[showKey] }))}
             className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-700 text-xs font-semibold">
@@ -99,7 +99,7 @@ export default function ChangePasswordPage() {
         )}
         <div className="rounded-2xl border border-slate-200 bg-white p-6 space-y-5">
           <div className="flex items-center gap-3 pb-3 border-b border-slate-100">
-            <div className="flex h-10 w-10 items-center justify-center rounded-full bg-blue-100 text-blue-600 text-xl">🔑</div>
+            <div className="flex h-10 w-10 items-center justify-center rounded-full bg-indigo-100 text-indigo-600 text-xl">🔑</div>
             <div>
               <h2 className="font-bold text-slate-900">Change Password</h2>
               <p className="text-xs text-slate-500">Use a strong password with 8+ characters</p>
@@ -111,7 +111,7 @@ export default function ChangePasswordPage() {
               <div className="relative mt-1.5">
                 <input type={show.current?"text":"password"} value={form.current}
                   onChange={e=>setForm(p=>({...p,current:e.target.value}))} placeholder="Enter current password"
-                  className={`w-full rounded-xl border px-3 py-2.5 pr-10 text-sm outline-none focus:ring-2 focus:ring-cyan-500 ${errors.current?"border-red-400 bg-red-50":"border-slate-200 bg-slate-50"}`}/>
+                  className={`w-full rounded-xl border px-3 py-2.5 pr-10 text-sm outline-none focus:ring-2 focus:ring-indigo-500 ${errors.current?"border-red-400 bg-red-50":"border-slate-200 bg-slate-50"}`}/>
                 <button type="button" onClick={()=>setShow(p=>({...p,current:!p.current}))} className="absolute right-3 top-1/2 -translate-y-1/2 text-xs font-semibold text-slate-400 hover:text-slate-700">{show.current?"Hide":"Show"}</button>
               </div>
               {errors.current&&<p className="mt-1 text-xs text-red-600">⚠ {errors.current}</p>}
@@ -121,7 +121,7 @@ export default function ChangePasswordPage() {
               <div className="relative mt-1.5">
                 <input type={show.next?"text":"password"} value={form.next}
                   onChange={e=>setForm(p=>({...p,next:e.target.value}))} placeholder="Enter new password"
-                  className={`w-full rounded-xl border px-3 py-2.5 pr-10 text-sm outline-none focus:ring-2 focus:ring-cyan-500 ${errors.next?"border-red-400 bg-red-50":"border-slate-200 bg-slate-50"}`}/>
+                  className={`w-full rounded-xl border px-3 py-2.5 pr-10 text-sm outline-none focus:ring-2 focus:ring-indigo-500 ${errors.next?"border-red-400 bg-red-50":"border-slate-200 bg-slate-50"}`}/>
                 <button type="button" onClick={()=>setShow(p=>({...p,next:!p.next}))} className="absolute right-3 top-1/2 -translate-y-1/2 text-xs font-semibold text-slate-400 hover:text-slate-700">{show.next?"Hide":"Show"}</button>
               </div>
               {errors.next&&<p className="mt-1 text-xs text-red-600">⚠ {errors.next}</p>}
@@ -132,13 +132,13 @@ export default function ChangePasswordPage() {
               <div className="relative mt-1.5">
                 <input type={show.confirm?"text":"password"} value={form.confirm}
                   onChange={e=>setForm(p=>({...p,confirm:e.target.value}))} placeholder="Re-enter new password"
-                  className={`w-full rounded-xl border px-3 py-2.5 pr-10 text-sm outline-none focus:ring-2 focus:ring-cyan-500 ${errors.confirm?"border-red-400 bg-red-50":"border-slate-200 bg-slate-50"}`}/>
+                  className={`w-full rounded-xl border px-3 py-2.5 pr-10 text-sm outline-none focus:ring-2 focus:ring-indigo-500 ${errors.confirm?"border-red-400 bg-red-50":"border-slate-200 bg-slate-50"}`}/>
                 <button type="button" onClick={()=>setShow(p=>({...p,confirm:!p.confirm}))} className="absolute right-3 top-1/2 -translate-y-1/2 text-xs font-semibold text-slate-400 hover:text-slate-700">{show.confirm?"Hide":"Show"}</button>
               </div>
               {errors.confirm&&<p className="mt-1 text-xs text-red-600">⚠ {errors.confirm}</p>}
               {form.confirm&&form.next&&form.confirm===form.next&&<p className="mt-1 text-xs text-emerald-600">✓ Passwords match</p>}
             </div>
-            <button type="submit" disabled={busy} className="w-full rounded-xl bg-gradient-to-r from-blue-600 to-emerald-500 py-2.5 text-sm text-white font-semibold disabled:opacity-60">
+            <button type="submit" disabled={busy} className="w-full rounded-xl bg-gradient-to-r from-indigo-600 to-emerald-600 py-2.5 text-sm text-white font-semibold disabled:opacity-60">
               {busy?"Updating...":"Update Password"}
             </button>
           </form>

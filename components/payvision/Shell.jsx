@@ -5,7 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useRouter } from "next/navigation";
 
-const INACTIVITY_MS = 30 * 60 * 1000; // 30 minutes
+const INACTIVITY_MS = 30 * 60 * 1000;
 
 const adminMenu = [
   { label: "Dashboard", href: "/" },
@@ -115,7 +115,6 @@ export default function Shell({ title, breadcrumb, children }) {
     function resetActivity() { lastActivityRef.current = Date.now(); }
     const events = ["mousedown", "mousemove", "keydown", "touchstart", "scroll", "click"];
     events.forEach(ev => window.addEventListener(ev, resetActivity, { passive: true }));
-
     const id = setInterval(async () => {
       if (Date.now() - lastActivityRef.current > INACTIVITY_MS) {
         clearInterval(id);
@@ -123,7 +122,6 @@ export default function Shell({ title, breadcrumb, children }) {
         router.push("/login?reason=inactivity");
       }
     }, 60_000);
-
     return () => {
       events.forEach(ev => window.removeEventListener(ev, resetActivity));
       clearInterval(id);
@@ -144,15 +142,19 @@ export default function Shell({ title, breadcrumb, children }) {
 
   const SidebarContent = () => (
     <>
-      <div className="h-20 px-6 flex items-center border-b border-slate-200">
-        <div className="h-11 w-11 rounded-full bg-emerald-500 text-white grid place-items-center font-bold text-xl">PV</div>
+      {/* Brand */}
+      <div className="h-20 px-5 flex items-center border-b border-white/10">
+        <div className="h-10 w-10 rounded-xl bg-indigo-600 flex items-center justify-center shrink-0">
+          <span className="text-white font-bold text-base">PV</span>
+        </div>
         <div className="ml-3">
-          <p className="text-4xl leading-none font-bold text-emerald-500">PayVision</p>
-          <p className="text-xs text-slate-500">Merchant Platform</p>
+          <p className="text-lg font-bold text-white leading-tight">PayVision</p>
+          <p className="text-xs text-slate-400">Merchant Platform</p>
         </div>
       </div>
 
-      <nav className="py-2 flex-1 overflow-auto">
+      {/* Navigation */}
+      <nav className="py-3 flex-1 overflow-auto scrollbar-none">
         {mainMenu.map((item) => {
           const active = activePath(pathname, item.href);
           const showChildren = item.children && pathname.startsWith(item.href);
@@ -160,25 +162,25 @@ export default function Shell({ title, breadcrumb, children }) {
           return (
             <div key={`${item.label}:${item.href}`}>
               <Link href={item.href} onClick={() => setSidebarOpen(false)}
-                className={`h-12 px-6 flex items-center justify-between border-l-4 text-sm ${
+                className={`h-11 px-5 flex items-center justify-between border-l-4 text-sm font-medium transition-all ${
                   active
-                    ? "bg-gradient-to-r from-cyan-600 to-emerald-500 text-white border-l-cyan-800"
-                    : "border-l-transparent text-slate-600 hover:bg-[#dcedea]"
+                    ? "bg-white/10 border-l-indigo-400 text-white"
+                    : "border-l-transparent text-slate-400 hover:bg-white/5 hover:text-white"
                 }`}>
                 <span>{item.label}</span>
-                <span>{item.children ? "^" : "v"}</span>
+                <span className={`text-xs transition-transform ${showChildren ? "rotate-180" : ""} ${active ? "text-indigo-300" : "text-slate-600"}`}>▾</span>
               </Link>
 
               {showChildren && (
-                <div className="bg-white/50">
+                <div className="border-l border-indigo-600/30 ml-5 pl-0 mb-1">
                   {item.children.map((child) => {
                     const childActive = pathname === child.href;
                     return (
                       <Link key={`${child.label}:${child.href}`} href={child.href} onClick={() => setSidebarOpen(false)}
-                        className={`block px-8 py-2 text-sm border-l-4 ${
+                        className={`block pl-5 pr-4 py-2 text-xs border-l-2 transition-all ${
                           childActive
-                            ? "bg-gradient-to-r from-cyan-700 to-emerald-600 text-white border-l-cyan-900"
-                            : "border-l-transparent text-slate-700 hover:bg-[#dcedea]"
+                            ? "border-l-indigo-400 text-white bg-white/8 font-semibold"
+                            : "border-l-transparent text-slate-400 hover:text-white hover:border-l-indigo-500/50"
                         }`}>
                         {child.label}
                       </Link>
@@ -191,9 +193,11 @@ export default function Shell({ title, breadcrumb, children }) {
         })}
       </nav>
 
-      <div className="p-4 border-t border-slate-200">
-        <button type="button" onClick={onLogout} className="w-full rounded-xl bg-cyan-600 text-white py-2 font-medium hover:bg-cyan-700">
-          Logout
+      {/* Logout */}
+      <div className="p-4 border-t border-white/10">
+        <button type="button" onClick={onLogout}
+          className="w-full rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white py-2.5 text-sm font-semibold transition-colors">
+          Sign Out
         </button>
       </div>
     </>
@@ -202,37 +206,46 @@ export default function Shell({ title, breadcrumb, children }) {
   return (
     <div className="min-h-screen flex bg-slate-100">
       {/* Desktop sidebar */}
-      <aside className="hidden md:flex w-72 flex-col border-r border-slate-200 bg-[#e9f3f1]">
+      <aside className="hidden md:flex w-64 flex-col bg-[#0a1628] shrink-0">
         <SidebarContent />
       </aside>
 
       {/* Mobile sidebar overlay */}
       {sidebarOpen && (
         <div className="md:hidden fixed inset-0 z-40 flex">
-          <div className="fixed inset-0 bg-black/40" onClick={() => setSidebarOpen(false)}/>
-          <aside className="relative z-50 w-72 flex flex-col border-r border-slate-200 bg-[#e9f3f1] h-full">
+          <div className="fixed inset-0 bg-black/60 backdrop-blur-sm" onClick={() => setSidebarOpen(false)}/>
+          <aside className="relative z-50 w-64 flex flex-col bg-[#0a1628] h-full shadow-2xl">
             <SidebarContent />
           </aside>
         </div>
       )}
 
-      <main className="flex-1 min-w-0">
-        <header className="h-20 px-4 md:px-8 bg-gradient-to-r from-blue-600 to-emerald-500 text-white flex items-center justify-between">
+      <main className="flex-1 min-w-0 flex flex-col">
+        {/* Top header */}
+        <header className="h-16 px-4 md:px-8 bg-[#0a1628] text-white flex items-center justify-between shrink-0 border-b border-white/10">
           <button type="button" onClick={() => setSidebarOpen(v => !v)}
-            className="md:hidden h-10 w-10 rounded-lg border border-white/30 grid place-items-center">
-            <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+            className="md:hidden h-9 w-9 rounded-lg border border-white/20 flex items-center justify-center hover:bg-white/10 transition-colors">
+            <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
               <line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/>
             </svg>
           </button>
           <span className="hidden md:block"/>
-          <p className="text-sm font-medium">{role === "CLIENT" ? "PayVision Merchant" : "PayVision Admin"}</p>
+          <div className="flex items-center gap-3">
+            <div className="h-2 w-2 rounded-full bg-emerald-400 animate-pulse"/>
+            <span className="text-sm text-slate-300 font-medium">
+              {role === "CLIENT" ? "Merchant Portal" : "Admin Console"}
+            </span>
+          </div>
         </header>
 
-        <section className="p-4 md:p-7 space-y-5">
-          <div className="rounded-2xl bg-gradient-to-r from-blue-500 to-emerald-500 text-white px-5 py-4 flex items-center justify-between">
-            <h1 className="text-3xl font-bold">{title}</h1>
-            <p className="text-xs md:text-sm bg-white/20 rounded-full px-3 py-1">{breadcrumb}</p>
+        {/* Page content */}
+        <section className="flex-1 p-4 md:p-6 space-y-5 overflow-auto">
+          {/* Page header card */}
+          <div className="rounded-2xl bg-gradient-to-r from-[#0f1f3d] to-[#0d5c3a] text-white px-6 py-4 flex items-center justify-between shadow-lg">
+            <h1 className="text-2xl font-bold tracking-tight">{title}</h1>
+            <p className="text-xs md:text-sm bg-white/15 rounded-full px-3 py-1 text-slate-200 border border-white/10">{breadcrumb}</p>
           </div>
+
           {children}
         </section>
       </main>

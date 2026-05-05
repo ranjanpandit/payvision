@@ -104,13 +104,13 @@ export default function PendingMerchantPage() {
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             placeholder="Search pending merchants"
-            className="w-full md:w-80 rounded-xl border border-slate-300 px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-cyan-500"
+            className="w-full md:w-80 rounded-xl border border-slate-300 px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-indigo-500"
           />
         </div>
 
         <div className="overflow-x-auto rounded-xl border border-slate-200">
           <table className="min-w-full text-sm">
-            <thead className="bg-blue-600 text-white">
+            <thead className="bg-[#0f1f3d] text-white">
               <tr>
                 <th className="px-3 py-2 text-left">No.</th>
                 <th className="px-3 py-2 text-left">Merchant ID</th>

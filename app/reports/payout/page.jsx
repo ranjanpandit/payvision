@@ -173,7 +173,7 @@ export default function PayoutReportPage() {
           </div>
         </div>
         <div className="flex items-center gap-2">
-          <button type="button" onClick={() => loadReport()} className="rounded-xl bg-gradient-to-r from-blue-600 to-emerald-500 px-6 py-2 text-white font-medium">Search</button>
+          <button type="button" onClick={() => loadReport()} className="rounded-xl bg-gradient-to-r from-indigo-600 to-emerald-600 px-6 py-2 text-white font-medium">Search</button>
           <button type="button" onClick={onReset} className="rounded-xl bg-slate-500 px-6 py-2 text-white font-medium">Reset</button>
         </div>
       </div>
@@ -194,7 +194,7 @@ export default function PayoutReportPage() {
 
         <div className="overflow-x-auto rounded-xl border border-slate-200">
           <table className="min-w-full text-sm">
-            <thead className="bg-blue-600 text-white">
+            <thead className="bg-[#0f1f3d] text-white">
               <tr>
                 <th className="px-3 py-2 text-left">S.No</th>
                 <th className="px-3 py-2 text-left">Merchant ID</th>

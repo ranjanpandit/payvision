@@ -15,7 +15,7 @@ function PinInput({ label, hint, fieldKey, value, showPin, error, confirmMatch, 
           inputMode="numeric"
           onChange={e => onChange(e.target.value.replace(/\D/g, "").slice(0, 6))}
           placeholder="• • • • • •"
-          className={`w-full rounded-xl border px-3 py-2.5 pr-10 text-sm tracking-[0.5em] outline-none focus:ring-2 focus:ring-cyan-500 transition-colors ${error ? "border-red-400 bg-red-50" : "border-slate-200 bg-slate-50"}`}
+          className={`w-full rounded-xl border px-3 py-2.5 pr-10 text-sm tracking-[0.5em] outline-none focus:ring-2 focus:ring-indigo-500 transition-colors ${error ? "border-red-400 bg-red-50" : "border-slate-200 bg-slate-50"}`}
         />
         <button type="button" onClick={onToggleShow}
           className="absolute right-3 top-1/2 -translate-y-1/2 text-xs font-semibold text-slate-400 hover:text-slate-700">
@@ -90,7 +90,7 @@ export default function ChangeTpinPage() {
         )}
         <div className="rounded-2xl border border-slate-200 bg-white p-6 space-y-5">
           <div className="flex items-center gap-3 pb-3 border-b border-slate-100">
-            <div className="flex h-10 w-10 items-center justify-center rounded-full bg-blue-100 text-blue-600 text-xl">🔐</div>
+            <div className="flex h-10 w-10 items-center justify-center rounded-full bg-indigo-100 text-indigo-600 text-xl">🔐</div>
             <div>
               <h2 className="font-bold text-slate-900">Transaction PIN (TPIN)</h2>
               <p className="text-xs text-slate-500">6-digit numeric PIN used to authorize wallet transactions</p>
@@ -122,7 +122,7 @@ export default function ChangeTpinPage() {
             />
 
             <div className="flex items-center gap-3 pt-2">
-              <button type="submit" disabled={busy} className="flex-1 rounded-xl bg-gradient-to-r from-blue-600 to-emerald-500 py-2.5 text-sm text-white font-semibold disabled:opacity-60">
+              <button type="submit" disabled={busy} className="flex-1 rounded-xl bg-gradient-to-r from-indigo-600 to-emerald-600 py-2.5 text-sm text-white font-semibold disabled:opacity-60">
                 {busy ? "Saving..." : isFirstTime ? "Set TPIN" : "Change TPIN"}
               </button>
               <button type="button" onClick={() => { setIsFirstTime(v => !v); setForm({ current: "", next: "", confirm: "" }); setErrors({}); }}

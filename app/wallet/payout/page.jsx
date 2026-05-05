@@ -250,7 +250,7 @@ export default function PayoutWalletPage() {
       <div className="rounded-2xl border border-slate-200 bg-white p-4">
         <div className="flex flex-wrap items-center justify-between gap-3 rounded-xl border border-slate-200 bg-slate-50 p-3">
           <div className="flex flex-wrap items-center gap-2">
-            <button type="button" className="rounded-lg border border-slate-300 bg-white px-4 py-1.5 text-blue-600">Copy</button>
+            <button type="button" className="rounded-lg border border-slate-300 bg-white px-4 py-1.5 text-indigo-600">Copy</button>
             <button type="button" className="rounded-lg border border-slate-300 bg-white px-4 py-1.5 text-emerald-600">CSV</button>
             <button type="button" className="rounded-lg border border-slate-300 bg-white px-4 py-1.5 text-emerald-600">Excel</button>
             <button type="button" className="rounded-lg border border-slate-300 bg-white px-4 py-1.5 text-amber-500">Print</button>
@@ -299,7 +299,7 @@ export default function PayoutWalletPage() {
 
         <div className="mt-3 overflow-x-auto rounded-xl border border-blue-500">
           <table className="min-w-full text-sm">
-            <thead className="bg-blue-600 text-white">
+            <thead className="bg-[#0f1f3d] text-white">
               <tr>
                 <th className="px-3 py-2 text-left">S.No</th>
                 <th className="px-3 py-2 text-left">Merchant ID</th>
@@ -337,7 +337,7 @@ export default function PayoutWalletPage() {
                         <button
                           type="button"
                           onClick={() => router.push(`/wallet/payout/history?merchantId=${encodeURIComponent(row.merchantId)}`)}
-                          className="rounded-full bg-blue-600 px-2 py-0.5 text-xs text-white"
+                          className="rounded-full bg-indigo-600 px-2 py-0.5 text-xs text-white"
                           title="View"
                         >
                           View
@@ -542,7 +542,7 @@ export default function PayoutWalletPage() {
                 type="button"
                 onClick={submitCredit}
                 disabled={creditBusy}
-                className="rounded-xl bg-gradient-to-r from-blue-600 to-emerald-500 px-5 py-2 text-sm font-semibold text-white disabled:opacity-60"
+                className="rounded-xl bg-gradient-to-r from-indigo-600 to-emerald-600 px-5 py-2 text-sm font-semibold text-white disabled:opacity-60"
               >
                 {creditBusy ? "Submitting..." : payoutActionType === "DEBIT" ? "Deduct Wallet" : "Add Wallet"}
               </button>

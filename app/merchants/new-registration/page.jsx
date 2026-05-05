@@ -123,7 +123,7 @@ function Field({ label, name, value, onChange, onBlur, error, placeholder = "", 
         maxLength={maxLength}
         onChange={(e) => onChange(name, e.target.value)}
         onBlur={() => onBlur && onBlur(name)}
-        className={`mt-1.5 w-full rounded-xl border px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-cyan-500 transition-colors ${
+        className={`mt-1.5 w-full rounded-xl border px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-indigo-500 transition-colors ${
           error ? "border-red-400 bg-red-50 focus:ring-red-400" : "border-slate-300"
         }`}
       />
@@ -146,7 +146,7 @@ function SelectField({ label, name, value, onChange, onBlur, error, options, req
         value={value}
         onChange={(e) => onChange(name, e.target.value)}
         onBlur={() => onBlur && onBlur(name)}
-        className={`mt-1.5 w-full rounded-xl border px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-cyan-500 transition-colors ${
+        className={`mt-1.5 w-full rounded-xl border px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-indigo-500 transition-colors ${
           error ? "border-red-400 bg-red-50" : "border-slate-300"
         }`}
       >
@@ -176,7 +176,7 @@ function TextareaField({ label, name, value, onChange, onBlur, error, placeholde
         rows={2}
         onChange={(e) => onChange(name, e.target.value)}
         onBlur={() => onBlur && onBlur(name)}
-        className={`mt-1.5 w-full rounded-xl border px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-cyan-500 transition-colors ${
+        className={`mt-1.5 w-full rounded-xl border px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-indigo-500 transition-colors ${
           error ? "border-red-400 bg-red-50" : "border-slate-300"
         }`}
       />
@@ -228,7 +228,7 @@ function SuccessCard({ merchantId, credentials, onRegisterAnother }) {
 
       {/* Login Credentials */}
       {credentials && (
-        <div className="rounded-xl border border-blue-200 bg-white p-4 space-y-3">
+        <div className="rounded-xl border border-indigo-200 bg-white p-4 space-y-3">
           <p className="text-xs font-semibold text-slate-500 uppercase tracking-wide">Client Login Credentials</p>
           <p className="text-xs text-amber-700 bg-amber-50 border border-amber-200 rounded-lg px-3 py-2">
             ⚠ Save these credentials now. The password cannot be recovered later.
@@ -264,7 +264,7 @@ function SuccessCard({ merchantId, credentials, onRegisterAnother }) {
 
       <button
         onClick={onRegisterAnother}
-        className="rounded-xl bg-gradient-to-r from-blue-600 to-emerald-500 px-5 py-2 text-sm text-white font-medium"
+        className="rounded-xl bg-gradient-to-r from-indigo-600 to-emerald-600 px-5 py-2 text-sm text-white font-medium"
       >
         + Register Another Merchant
       </button>
@@ -379,7 +379,7 @@ export default function NewMerchantRegistrationPage() {
       <form onSubmit={onSubmit} noValidate className="rounded-2xl border border-slate-200 bg-white p-5 md:p-6 space-y-5">
 
         {/* Personal Info */}
-        <div className="rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold text-white">Personal Info</div>
+        <div className="rounded-lg bg-indigo-600 px-4 py-2 text-sm font-semibold text-white">Personal Info</div>
         <div className="grid md:grid-cols-2 gap-4">
           <Field label="First Name" required placeholder="e.g. Ranjan" {...fieldProps("firstName")} />
           <Field label="Last Name" required placeholder="e.g. Pandit" {...fieldProps("lastName")} />
@@ -410,7 +410,7 @@ export default function NewMerchantRegistrationPage() {
         </div>
 
         {/* Company Info */}
-        <div className="rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold text-white">Company Info</div>
+        <div className="rounded-lg bg-indigo-600 px-4 py-2 text-sm font-semibold text-white">Company Info</div>
         <div className="grid md:grid-cols-2 gap-4">
           <Field label="Company Name" required placeholder="Registered company name" {...fieldProps("companyName")} />
           <Field
@@ -444,7 +444,7 @@ export default function NewMerchantRegistrationPage() {
           <button
             type="submit"
             disabled={saving}
-            className="rounded-xl bg-gradient-to-r from-blue-600 to-emerald-500 px-6 py-2.5 text-white font-semibold text-sm disabled:opacity-60 hover:opacity-90 transition-opacity"
+            className="rounded-xl bg-gradient-to-r from-indigo-600 to-emerald-600 px-6 py-2.5 text-white font-semibold text-sm disabled:opacity-60 hover:opacity-90 transition-opacity"
           >
             {saving ? "Registering..." : "Register Merchant"}
           </button>

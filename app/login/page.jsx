@@ -159,7 +159,7 @@ export default function LoginPage() {
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
           <div className="w-full max-w-sm rounded-2xl bg-white p-6 shadow-2xl">
             <div className="flex items-center gap-3 mb-4">
-              <div className="h-10 w-10 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 text-xl">🔑</div>
+              <div className="h-10 w-10 rounded-full bg-blue-100 flex items-center justify-center text-indigo-600 text-xl">🔑</div>
               <h3 className="font-bold text-slate-900 text-lg">Forgot Password?</h3>
             </div>
             <p className="text-sm text-slate-600 mb-3">Password resets are managed by your system administrator.</p>
@@ -167,7 +167,7 @@ export default function LoginPage() {
               Contact your admin with your registered email address to verify identity and get a temporary password.
             </div>
             <button onClick={() => setForgotOpen(false)}
-              className="w-full rounded-xl bg-blue-600 py-2.5 text-sm font-semibold text-white hover:bg-blue-700">
+              className="w-full rounded-xl bg-indigo-600 py-2.5 text-sm font-semibold text-white hover:bg-indigo-700">
               Got it
             </button>
           </div>
@@ -175,7 +175,7 @@ export default function LoginPage() {
       )}
 
       {/* Left panel — brand + illustration */}
-      <div className="hidden lg:flex lg:w-[55%] flex-col bg-gradient-to-br from-blue-700 via-blue-600 to-emerald-500 relative overflow-hidden">
+      <div className="hidden lg:flex lg:w-[55%] flex-col bg-gradient-to-br from-[#0a1628] via-[#0f2444] to-[#065f46] relative overflow-hidden">
         {/* Background pattern */}
         <div className="absolute inset-0 opacity-10">
           <svg width="100%" height="100%">
@@ -239,7 +239,7 @@ export default function LoginPage() {
 
           {/* Mobile logo */}
           <div className="lg:hidden flex flex-col items-center mb-8">
-            <div className="h-16 w-16 rounded-2xl bg-gradient-to-br from-blue-600 to-emerald-500 flex items-center justify-center mb-3 shadow-lg">
+            <div className="h-16 w-16 rounded-2xl bg-gradient-to-br from-indigo-600 to-emerald-600 flex items-center justify-center mb-3 shadow-lg">
               <span className="text-2xl font-bold text-white">PV</span>
             </div>
             <h1 className="text-2xl font-bold text-slate-900">PayVision</h1>
@@ -248,7 +248,7 @@ export default function LoginPage() {
 
           {/* Card */}
           <div className="bg-white rounded-2xl shadow-xl border border-slate-100 overflow-hidden">
-            <div className="h-1 bg-gradient-to-r from-blue-600 to-emerald-500"/>
+            <div className="h-1 bg-gradient-to-r from-indigo-600 to-emerald-600"/>
             <div className="px-8 py-8">
               <h2 className="text-2xl font-bold text-slate-900">
                 {loadingSetup ? "Loading..." : adminExists ? "Welcome back 👋" : "Create Admin"}
@@ -279,7 +279,7 @@ export default function LoginPage() {
                     </span>
                     <input type="email" value={email} onChange={e => setEmail(e.target.value)}
                       placeholder="admin@payvision.com" autoComplete="email"
-                      className="w-full rounded-xl border border-slate-200 bg-slate-50 pl-10 pr-4 py-3 text-sm outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white transition-colors"/>
+                      className="w-full rounded-xl border border-slate-200 bg-slate-50 pl-10 pr-4 py-3 text-sm outline-none focus:ring-2 focus:ring-indigo-500 focus:bg-white transition-colors"/>
                   </div>
                 </div>
 
@@ -289,7 +289,7 @@ export default function LoginPage() {
                     <label className="text-sm font-semibold text-slate-700">Password</label>
                     {adminExists && (
                       <button type="button" onClick={() => setForgotOpen(true)}
-                        className="text-xs text-blue-600 hover:underline">Forgot password?</button>
+                        className="text-xs text-indigo-600 hover:underline">Forgot password?</button>
                     )}
                   </div>
                   <div className="relative">
@@ -301,7 +301,7 @@ export default function LoginPage() {
                     <input type={showPass ? "text" : "password"} value={password}
                       onChange={e => setPassword(e.target.value)}
                       placeholder="••••••••" autoComplete="current-password"
-                      className="w-full rounded-xl border border-slate-200 bg-slate-50 pl-10 pr-11 py-3 text-sm outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white transition-colors"/>
+                      className="w-full rounded-xl border border-slate-200 bg-slate-50 pl-10 pr-11 py-3 text-sm outline-none focus:ring-2 focus:ring-indigo-500 focus:bg-white transition-colors"/>
                     <button type="button" onClick={() => setShowPass(v => !v)}
                       className="absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-700 transition-colors">
                       {showPass ? (
@@ -322,7 +322,7 @@ export default function LoginPage() {
                 {adminExists && (
                   <label className="flex items-center gap-3 cursor-pointer group">
                     <div className={`relative h-5 w-5 rounded border-2 flex items-center justify-center shrink-0 transition-colors
-                      ${rememberMe ? "bg-blue-600 border-blue-600" : "border-slate-300 group-hover:border-blue-400"}`}
+                      ${rememberMe ? "bg-indigo-600 border-indigo-600" : "border-slate-300 group-hover:border-blue-400"}`}
                       onClick={() => setRememberMe(v => !v)}>
                       {rememberMe && <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
                         <path d="M1.5 5l2.5 2.5 4.5-5" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
@@ -334,7 +334,7 @@ export default function LoginPage() {
 
                 {/* Submit */}
                 <button type="submit" disabled={busy || loadingSetup || lockout.locked}
-                  className="w-full rounded-xl bg-gradient-to-r from-blue-600 to-emerald-500 py-3 text-sm font-bold text-white disabled:opacity-60 hover:opacity-90 transition-opacity flex items-center justify-center gap-2">
+                  className="w-full rounded-xl bg-gradient-to-r from-indigo-600 to-emerald-600 py-3 text-sm font-bold text-white disabled:opacity-60 hover:opacity-90 transition-opacity flex items-center justify-center gap-2">
                   {busy ? (
                     <>
                       <svg className="animate-spin" width="16" height="16" fill="none" viewBox="0 0 24 24">

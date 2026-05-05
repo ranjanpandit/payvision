@@ -296,7 +296,7 @@ export default function CommissionScreen({ commissionType = "PAYIN" }) {
             <button
               type="submit"
               disabled={saving}
-              className="rounded-xl bg-gradient-to-r from-blue-600 to-emerald-500 px-6 py-2 text-white font-medium disabled:opacity-60"
+              className="rounded-xl bg-gradient-to-r from-indigo-600 to-emerald-600 px-6 py-2 text-white font-medium disabled:opacity-60"
             >
               {saving ? "Saving..." : form.id ? "Update" : "Submit"}
             </button>
@@ -316,7 +316,7 @@ export default function CommissionScreen({ commissionType = "PAYIN" }) {
       <div className="rounded-2xl border border-slate-200 bg-white p-4">
         <div className="flex flex-wrap items-center justify-between gap-3 rounded-xl border border-slate-200 bg-slate-50 p-3">
           <div className="flex flex-wrap items-center gap-2">
-            <button type="button" className="rounded-lg border border-slate-300 bg-white px-4 py-1.5 text-blue-600">Copy</button>
+            <button type="button" className="rounded-lg border border-slate-300 bg-white px-4 py-1.5 text-indigo-600">Copy</button>
             <button type="button" className="rounded-lg border border-slate-300 bg-white px-4 py-1.5 text-emerald-600">CSV</button>
             <button type="button" className="rounded-lg border border-slate-300 bg-white px-4 py-1.5 text-emerald-600">Excel</button>
             <button type="button" className="rounded-lg border border-slate-300 bg-white px-4 py-1.5 text-amber-500">Print</button>
@@ -365,7 +365,7 @@ export default function CommissionScreen({ commissionType = "PAYIN" }) {
 
         <div className="mt-3 overflow-x-auto rounded-xl border border-blue-500">
           <table className="min-w-full text-sm">
-            <thead className="bg-blue-600 text-white">
+            <thead className="bg-[#0f1f3d] text-white">
               <tr>
                 <th className="px-3 py-2 text-left">Merchant ID</th>
                 <th className="px-3 py-2 text-left">Provider Name</th>
@@ -416,7 +416,7 @@ export default function CommissionScreen({ commissionType = "PAYIN" }) {
                               isSurcharge: row.isSurcharge,
                             })
                           }
-                          className="rounded-lg bg-blue-600 px-3 py-1 text-xs text-white"
+                          className="rounded-lg bg-indigo-600 px-3 py-1 text-xs text-white"
                         >
                           Edit
                         </button>

@@ -82,7 +82,7 @@ export default async function HomePage() {
             </select>
           </div>
         </div>
-        <button type="button" className="mt-4 rounded-xl bg-gradient-to-r from-blue-600 to-emerald-500 px-6 py-2 text-white font-medium">
+        <button type="button" className="mt-4 rounded-xl bg-gradient-to-r from-indigo-600 to-emerald-600 px-6 py-2 text-white font-medium">
           Search
         </button>
       </div>
@@ -90,12 +90,12 @@ export default async function HomePage() {
       <div className="grid md:grid-cols-2 xl:grid-cols-4 gap-4">
         {isClient ? (
           <>
-            <StatCard title="Your Payout Balance" value={merchantPayoutBalance} color="bg-gradient-to-r from-blue-700 to-blue-400" />
+            <StatCard title="Your Payout Balance" value={merchantPayoutBalance} color="bg-gradient-to-r from-[#0a1628] to-blue-400" />
             <StatCard title="Your Paying Balance" value={merchantPayinBalance} color="bg-gradient-to-r from-violet-700 to-violet-400" />
           </>
         ) : (
           <>
-            <StatCard title="Admin API Payout Balance" value={adminPayoutBalance} color="bg-gradient-to-r from-blue-700 to-blue-400" />
+            <StatCard title="Admin API Payout Balance" value={adminPayoutBalance} color="bg-gradient-to-r from-[#0a1628] to-blue-400" />
             <StatCard title="Total Merchant Payout Balance" value={totalMerchantPayoutBalance} color="bg-gradient-to-r from-green-700 to-green-400" />
             <StatCard title="Admin API Paying Balance" value="0.00" color="bg-gradient-to-r from-orange-700 to-orange-400" />
             <StatCard title="Total Merchant Paying Balance" value={totalMerchantPayinBalance} color="bg-gradient-to-r from-violet-700 to-violet-400" />

@@ -113,7 +113,7 @@ export default function EmployeesPage() {
         {/* Add form */}
         <div className="rounded-2xl border border-slate-200 bg-white p-5">
           <div className="flex items-center gap-3 mb-4 pb-3 border-b border-slate-100">
-            <div className="flex h-10 w-10 items-center justify-center rounded-full bg-blue-100 text-blue-600 text-xl">👤</div>
+            <div className="flex h-10 w-10 items-center justify-center rounded-full bg-indigo-100 text-indigo-600 text-xl">👤</div>
             <div>
               <h2 className="font-bold text-slate-900">Add New Admin Employee</h2>
               <p className="text-xs text-slate-500">Creates an admin account with a temporary password</p>
@@ -122,9 +122,9 @@ export default function EmployeesPage() {
           <form onSubmit={onAdd} className="flex flex-col sm:flex-row gap-3">
             <input type="email" value={newEmail} onChange={e => setNewEmail(e.target.value)}
               placeholder="employee@yourcompany.com" required
-              className="flex-1 rounded-xl border border-slate-200 bg-slate-50 px-4 py-2.5 text-sm outline-none focus:ring-2 focus:ring-cyan-500 focus:bg-white"/>
+              className="flex-1 rounded-xl border border-slate-200 bg-slate-50 px-4 py-2.5 text-sm outline-none focus:ring-2 focus:ring-indigo-500 focus:bg-white"/>
             <button type="submit" disabled={busy || !newEmail.trim()}
-              className="rounded-xl bg-gradient-to-r from-blue-600 to-emerald-500 px-6 py-2.5 text-sm font-semibold text-white disabled:opacity-60">
+              className="rounded-xl bg-gradient-to-r from-indigo-600 to-emerald-600 px-6 py-2.5 text-sm font-semibold text-white disabled:opacity-60">
               {busy ? "Creating..." : "Create Account"}
             </button>
           </form>
@@ -140,25 +140,25 @@ export default function EmployeesPage() {
 
         {/* New credentials */}
         {newCredentials && (
-          <div className="rounded-2xl border border-blue-200 bg-blue-50 p-5">
-            <p className="font-semibold text-blue-900 mb-3">New Employee Credentials — Share Securely</p>
+          <div className="rounded-2xl border border-indigo-200 bg-indigo-50 p-5">
+            <p className="font-semibold text-indigo-900 mb-3">New Employee Credentials — Share Securely</p>
             <div className="grid sm:grid-cols-2 gap-3 mb-3">
-              <div className="rounded-xl bg-white border border-blue-200 px-4 py-3">
-                <p className="text-xs font-semibold text-blue-500 uppercase mb-1">Email</p>
+              <div className="rounded-xl bg-white border border-indigo-200 px-4 py-3">
+                <p className="text-xs font-semibold text-indigo-500 uppercase mb-1">Email</p>
                 <p className="font-mono text-sm text-slate-800 break-all">{newCredentials.email}</p>
               </div>
-              <div className="rounded-xl bg-white border border-blue-200 px-4 py-3">
-                <p className="text-xs font-semibold text-blue-500 uppercase mb-1">Temp Password</p>
+              <div className="rounded-xl bg-white border border-indigo-200 px-4 py-3">
+                <p className="text-xs font-semibold text-indigo-500 uppercase mb-1">Temp Password</p>
                 <p className="font-mono text-sm text-slate-800">{newCredentials.password}</p>
               </div>
             </div>
             <div className="flex flex-wrap gap-2">
               <button onClick={() => doCopy(newCredentials.email, "nc-email")}
-                className="rounded-lg bg-blue-600 px-3 py-1.5 text-xs font-medium text-white">
+                className="rounded-lg bg-indigo-600 px-3 py-1.5 text-xs font-medium text-white">
                 {copiedKey === "nc-email" ? "✓ Copied" : "Copy Email"}
               </button>
               <button onClick={() => doCopy(newCredentials.password, "nc-pass")}
-                className="rounded-lg bg-blue-600 px-3 py-1.5 text-xs font-medium text-white">
+                className="rounded-lg bg-indigo-600 px-3 py-1.5 text-xs font-medium text-white">
                 {copiedKey === "nc-pass" ? "✓ Copied" : "Copy Password"}
               </button>
               <button onClick={() => doCopy(`Email: ${newCredentials.email}\nPassword: ${newCredentials.password}`, "nc-all")}
@@ -198,7 +198,7 @@ export default function EmployeesPage() {
           </div>
           <div className="overflow-x-auto">
             <table className="min-w-full text-sm">
-              <thead className="bg-blue-600 text-white">
+              <thead className="bg-[#0f1f3d] text-white">
                 <tr>
                   {["#", "Email", "Role", "Status", "Joined", "Actions"].map(h => (
                     <th key={h} className="px-4 py-2.5 text-left font-semibold whitespace-nowrap">{h}</th>

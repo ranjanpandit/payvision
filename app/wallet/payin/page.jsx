@@ -303,7 +303,7 @@ export default function PayinWalletPage() {
 
         <div className="mt-3 overflow-x-auto rounded-xl border border-slate-200">
           <table className="min-w-full text-sm">
-            <thead className="bg-blue-600 text-white">
+            <thead className="bg-[#0f1f3d] text-white">
               <tr>
                 <th className="px-3 py-2 text-left">S.No</th>
                 <th className="px-3 py-2 text-left">Merchant ID</th>
@@ -341,7 +341,7 @@ export default function PayinWalletPage() {
                         <button
                           type="button"
                           onClick={() => router.push(`/wallet/payin/history?merchantId=${encodeURIComponent(row.merchantId)}`)}
-                          className="rounded-full bg-blue-600 px-2 py-0.5 text-xs text-white"
+                          className="rounded-full bg-indigo-600 px-2 py-0.5 text-xs text-white"
                           title="View"
                         >
                           View
@@ -544,7 +544,7 @@ export default function PayinWalletPage() {
                 type="button"
                 onClick={submitDeduct}
                 disabled={deductBusy}
-                className="rounded-xl bg-gradient-to-r from-blue-600 to-rose-500 px-5 py-2 text-sm font-semibold text-white disabled:opacity-60"
+                className="rounded-xl bg-gradient-to-r from-indigo-600 to-rose-500 px-5 py-2 text-sm font-semibold text-white disabled:opacity-60"
               >
                 {deductBusy ? "Submitting..." : "Deduct Wallet"}
               </button>

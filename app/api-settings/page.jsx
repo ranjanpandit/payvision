@@ -88,7 +88,7 @@ export default function ApiSettingsPage() {
         <div className="rounded-2xl border border-slate-200 bg-white p-5">
           <label className="text-sm font-bold text-slate-700 block mb-2">Select Merchant</label>
           <select value={selectedId} onChange={e => setSelectedId(e.target.value)}
-            className="w-full max-w-md rounded-xl border border-slate-200 bg-slate-50 px-4 py-2.5 text-sm outline-none focus:ring-2 focus:ring-cyan-500">
+            className="w-full max-w-md rounded-xl border border-slate-200 bg-slate-50 px-4 py-2.5 text-sm outline-none focus:ring-2 focus:ring-indigo-500">
             <option value="">— Select a merchant —</option>
             {merchants.map(m => (
               <option key={m.merchantId} value={m.merchantId}>
@@ -110,8 +110,8 @@ export default function ApiSettingsPage() {
           <>
             {/* API Credentials (read-only) */}
             {apiCreds && (
-              <div className="rounded-2xl border border-blue-200 bg-blue-50 p-5">
-                <h2 className="font-bold text-blue-900 mb-4 flex items-center gap-2">
+              <div className="rounded-2xl border border-indigo-200 bg-indigo-50 p-5">
+                <h2 className="font-bold text-indigo-900 mb-4 flex items-center gap-2">
                   <span>🔑</span> API Credentials (Read-only)
                 </h2>
                 <div className="grid md:grid-cols-2 gap-4">
@@ -121,13 +121,13 @@ export default function ApiSettingsPage() {
                     { label: "API Secret", val: apiCreds.apiSecret, key: "apiSecret" },
                     { label: "Status", val: apiCreds.status, key: "status", noBtn: true },
                   ].map(({ label, val, key, noBtn }) => (
-                    <div key={key} className="rounded-xl bg-white border border-blue-200 px-4 py-3">
-                      <p className="text-xs font-semibold text-blue-500 uppercase tracking-wide mb-1">{label}</p>
+                    <div key={key} className="rounded-xl bg-white border border-indigo-200 px-4 py-3">
+                      <p className="text-xs font-semibold text-indigo-500 uppercase tracking-wide mb-1">{label}</p>
                       <div className="flex items-center justify-between gap-2">
                         <code className="text-sm text-slate-800 break-all font-mono">{val || "—"}</code>
                         {!noBtn && val && (
                           <button onClick={() => doCopy(val, key)}
-                            className="shrink-0 rounded-lg bg-blue-600 px-2.5 py-1 text-xs font-medium text-white">
+                            className="shrink-0 rounded-lg bg-indigo-600 px-2.5 py-1 text-xs font-medium text-white">
                             {copiedKey === key ? "✓" : "Copy"}
                           </button>
                         )}
@@ -150,7 +150,7 @@ export default function ApiSettingsPage() {
                   <p className="text-xs text-slate-400 mt-0.5">URL called after successful PayIn payment</p>
                   <input type="url" value={form.pgCallbackUrl} onChange={e => updateForm("pgCallbackUrl", e.target.value)}
                     placeholder="https://yoursite.com/webhook/payin"
-                    className="mt-1.5 w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-2.5 text-sm outline-none focus:ring-2 focus:ring-cyan-500"/>
+                    className="mt-1.5 w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-2.5 text-sm outline-none focus:ring-2 focus:ring-indigo-500"/>
                 </div>
 
                 <div>
@@ -158,7 +158,7 @@ export default function ApiSettingsPage() {
                   <p className="text-xs text-slate-400 mt-0.5">URL called after payout status update</p>
                   <input type="url" value={form.payoutCallbackUrl} onChange={e => updateForm("payoutCallbackUrl", e.target.value)}
                     placeholder="https://yoursite.com/webhook/payout"
-                    className="mt-1.5 w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-2.5 text-sm outline-none focus:ring-2 focus:ring-cyan-500"/>
+                    className="mt-1.5 w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-2.5 text-sm outline-none focus:ring-2 focus:ring-indigo-500"/>
                 </div>
 
                 <div className="grid md:grid-cols-2 gap-4">
@@ -167,13 +167,13 @@ export default function ApiSettingsPage() {
                     <p className="text-xs text-slate-400 mt-0.5">Only this IP can call your APIs</p>
                     <input type="text" value={form.ipAddress} onChange={e => updateForm("ipAddress", e.target.value)}
                       placeholder="e.g. 203.0.113.10"
-                      className="mt-1.5 w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-2.5 text-sm outline-none focus:ring-2 focus:ring-cyan-500"/>
+                      className="mt-1.5 w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-2.5 text-sm outline-none focus:ring-2 focus:ring-indigo-500"/>
                   </div>
                   <div>
                     <label className="text-sm font-semibold text-slate-700">IP Whitelist Status</label>
                     <p className="text-xs text-slate-400 mt-0.5">Enable to enforce IP restriction</p>
                     <select value={form.ipAddressStatus} onChange={e => updateForm("ipAddressStatus", e.target.value)}
-                      className="mt-1.5 w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-2.5 text-sm outline-none focus:ring-2 focus:ring-cyan-500">
+                      className="mt-1.5 w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-2.5 text-sm outline-none focus:ring-2 focus:ring-indigo-500">
                       <option value="INACTIVE">Inactive (disabled)</option>
                       <option value="ACTIVE">Active (enforced)</option>
                     </select>
@@ -182,7 +182,7 @@ export default function ApiSettingsPage() {
 
                 <div className="pt-2">
                   <button type="submit" disabled={saving || loading}
-                    className="rounded-xl bg-gradient-to-r from-blue-600 to-emerald-500 px-6 py-2.5 text-sm font-semibold text-white disabled:opacity-60">
+                    className="rounded-xl bg-gradient-to-r from-indigo-600 to-emerald-600 px-6 py-2.5 text-sm font-semibold text-white disabled:opacity-60">
                     {saving ? "Saving..." : "Save API Settings"}
                   </button>
                 </div>
