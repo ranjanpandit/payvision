@@ -1,0 +1,57 @@
+# PayVision
+
+> PayVision is a merchant payment gateway platform providing PayIn (UPI/card collection) and Payout (bank transfer) services. It offers a merchant portal for transaction management, wallet operations, commission tracking, and API integration.
+
+PayVision is a B2B payment infrastructure platform. Merchants integrate via REST API to accept payments and initiate payouts. The admin console manages merchant onboarding, wallet funding, commissions, and settlement reporting.
+
+## Platform
+
+- [Dashboard](http://187.127.162.29/): Real-time PayIn/Payout stats, 7-day transaction chart, recent transactions, merchant balance overview
+- [Login](http://187.127.162.29/login): JWT-based authentication with rate limiting (5 attempts, 15-min lock), remember-me (30 days), auto-logout on 30-min inactivity
+
+## Merchant Management (Admin)
+
+- [New Registration](http://187.127.162.29/merchants/new-registration): Onboard merchants — business name, contact, PAN, Aadhaar, GST, IFSC, callback URLs
+- [Active Merchants](http://187.127.162.29/merchants/active): List active merchants with API key/secret copy
+- [Pending Merchants](http://187.127.162.29/merchants/pending): Review and approve pending merchant applications
+- [New Connection](http://187.127.162.29/merchants/new-connection): Recently connected merchants
+
+## Wallet & Finance
+
+- [PG (PayIn) Wallet](http://187.127.162.29/wallet/payin): Fund merchant PayIn wallets, view history
+- [Payout Wallet](http://187.127.162.29/wallet/payout): Fund merchant Payout wallets, initiate transfers, view history
+- [Client Wallet](http://187.127.162.29/wallet): Merchant-facing wallet view — PayIn and Payout balances
+
+## Commission
+
+- [PG Commission](http://187.127.162.29/commission/pg): Set PayIn commission rates per merchant
+- [Payout Commission](http://187.127.162.29/commission/payout): Set Payout commission rates per merchant
+
+## Reports
+
+- [PayIn Report](http://187.127.162.29/reports): Filter PayIn transactions by date, merchant, status; export
+- [Payout Report](http://187.127.162.29/reports/payout): Filter Payout transactions; status check integration
+- [Security Amount Report](http://187.127.162.29/reports/security-amount): View security deposits per merchant
+
+## Account & Settings
+
+- [Profile](http://187.127.162.29/profile): Update name, email, phone
+- [Change Password](http://187.127.162.29/profile/change-password): Password update with strength validation
+- [Change TPIN](http://187.127.162.29/profile/change-tpin): 6-digit transaction PIN management
+- [API Settings](http://187.127.162.29/api-settings): Admin — set merchant callback URLs, IP whitelist (Admin only)
+- [API Credentials](http://187.127.162.29/api-credentials): Merchant — view own API key and secret
+- [Manage Employees](http://187.127.162.29/employees): Create and manage admin/staff accounts
+
+## API Reference
+
+- [API Documentation](http://187.127.162.29/api-docs): Full REST API docs — PayIn create-order, status-check, Payout pay-order, status-check, webhook specs
+- [PayIn Create Order](http://187.127.162.29/api/v1/payin/create-order): POST — initiate a payment collection
+- [PayIn Status Check](http://187.127.162.29/api/v1/payin/status-check): POST — query PayIn transaction status
+- [Payout Pay Order](http://187.127.162.29/api/v1/payout/create-order): POST — initiate a bank transfer
+- [Payout Status Check](http://187.127.162.29/api/v1/payout/status-check): POST — query Payout transaction status
+- [Auth Token](http://187.127.162.29/api/v1/openmoney/auth/client-token): POST — obtain bearer token for API calls
+
+## Optional
+
+- [llms.txt](http://187.127.162.29/llms.txt): This file
+- [Favicon](http://187.127.162.29/favicon.svg): Platform icon (SVG, shield + checkmark, indigo gradient)

@@ -144,8 +144,20 @@ export default function Shell({ title, breadcrumb, children }) {
     <>
       {/* Brand */}
       <div className="h-20 px-5 flex items-center border-b border-white/10">
-        <div className="h-10 w-10 rounded-xl bg-indigo-600 flex items-center justify-center shrink-0">
-          <span className="text-white font-bold text-base">PV</span>
+        <div className="h-10 w-10 shrink-0">
+          <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="pvG" x1="0" y1="0" x2="40" y2="40" gradientUnits="userSpaceOnUse">
+                <stop offset="0%" stopColor="#818cf8"/>
+                <stop offset="100%" stopColor="#3730a3"/>
+              </linearGradient>
+            </defs>
+            <rect width="40" height="40" rx="10" fill="url(#pvG)"/>
+            <path d="M20 8L10 13V22C10 27.5 14.3 32.2 20 33.5C25.7 32.2 30 27.5 30 22V13L20 8Z"
+              fill="rgba(255,255,255,0.12)" stroke="rgba(255,255,255,0.6)" strokeWidth="1.4" strokeLinejoin="round"/>
+            <path d="M14.5 21.5L18.5 25.5L26 17.5"
+              stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
+          </svg>
         </div>
         <div className="ml-3">
           <p className="text-lg font-bold text-white leading-tight">PayVision</p>
