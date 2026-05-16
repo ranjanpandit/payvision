@@ -34,7 +34,7 @@ export async function proxy(req) {
   const auth = await isAuthenticated(req);
   const { loggedIn, role } = auth;
 
-  if (pathname === "/login") {
+  if (pathname === "/login" || pathname === "/login/new-registration") {
     if (loggedIn) {
       return NextResponse.redirect(new URL("/", req.url));
     }

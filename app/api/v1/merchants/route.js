@@ -31,6 +31,12 @@ function normalizeStatus(v) {
   return "ACTIVE";
 }
 
+function normalizePayoutMode(v) {
+  const mode = sanitize(v).toUpperCase();
+  if (mode === "AUTO" || mode === "MANUAL") return mode;
+  return "MANUAL";
+}
+
 function generateMerchantId() {
   const now = new Date();
   const stamp = `${now.getFullYear()}${two(now.getMonth() + 1)}${two(now.getDate())}`;
@@ -124,6 +130,7 @@ const postHandler = async (req) => {
           companyWebsite: sanitize(body?.companyWebsite),
           officeAddress: sanitize(body?.officeAddress),
           status: "ACTIVE",
+          payoutMode: normalizePayoutMode(body?.payoutMode),
         },
       });
 
@@ -212,6 +219,7 @@ const putHandler = async (req) => {
         companyWebsite: body?.companyWebsite !== undefined ? sanitize(body?.companyWebsite) : undefined,
         officeAddress: body?.officeAddress !== undefined ? sanitize(body?.officeAddress) : undefined,
         status: body?.status !== undefined ? normalizeStatus(body?.status) : undefined,
+        payoutMode: body?.payoutMode !== undefined ? normalizePayoutMode(body?.payoutMode) : undefined,
       },
     });
 

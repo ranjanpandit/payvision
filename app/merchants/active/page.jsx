@@ -16,6 +16,7 @@ const emptyEditForm = {
   city: "",
   state: "",
   status: "ACTIVE",
+  payoutMode: "MANUAL",
 };
 
 function formatDate(iso) {
@@ -91,6 +92,7 @@ export default function ActiveMerchantPage() {
       city: String(merchant?.city || ""),
       state: String(merchant?.state || ""),
       status: String(merchant?.status || "ACTIVE").toUpperCase(),
+      payoutMode: String(merchant?.payoutMode || "MANUAL").toUpperCase(),
     });
     setMessage("");
   }
@@ -365,6 +367,17 @@ export default function ActiveMerchantPage() {
                   <option value="ACTIVE">ACTIVE</option>
                   <option value="INACTIVE">INACTIVE</option>
                   <option value="PENDING">PENDING</option>
+                </select>
+              </div>
+              <div>
+                <label className="text-xs font-semibold text-slate-700">Payout Mode</label>
+                <select
+                  value={editForm.payoutMode}
+                  onChange={(e) => updateEditField("payoutMode", e.target.value)}
+                  className="mt-1 w-full rounded-lg border border-slate-300 px-3 py-2 text-sm"
+                >
+                  <option value="MANUAL">MANUAL</option>
+                  <option value="AUTO">AUTO</option>
                 </select>
               </div>
               <div>

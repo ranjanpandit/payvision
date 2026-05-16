@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 // Fintech SVG illustration - payment flow themed
 function PayVisionIllustration() {
@@ -346,6 +347,14 @@ export default function LoginPage() {
                   ) : lockout.locked ? `Locked — retry in ${countdown}s` : adminExists ? "Sign In →" : "Create Admin Account"}
                 </button>
               </form>
+              {adminExists && (
+                <div className="mt-4 text-center text-sm text-slate-600">
+                  Don't have account?{" "}
+                  <Link href="/login/new-registration" className="font-semibold text-indigo-600 hover:text-indigo-700">
+                    Create merchant account
+                  </Link>
+                </div>
+              )}
 
               {/* Trust row */}
               <div className="mt-6 pt-5 border-t border-slate-100 flex items-center justify-center gap-5 text-xs text-slate-400">

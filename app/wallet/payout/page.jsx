@@ -44,6 +44,9 @@ export default function PayoutWalletPage() {
   const [viewLoading, setViewLoading] = useState(false);
   const [viewMerchantId, setViewMerchantId] = useState("");
   const [viewRows, setViewRows] = useState([]);
+  const [manualRequests, setManualRequests] = useState([]);
+  const [manualBusyRef, setManualBusyRef] = useState("");
+  const [reloadTick, setReloadTick] = useState(0);
 
   const from = total === 0 ? 0 : (page - 1) * size + 1;
   const to = Math.min(page * size, total);
@@ -114,7 +117,50 @@ export default function PayoutWalletPage() {
     return () => {
       cancelled = true;
     };
-  }, [role, page, size, searchQuery]);
+  }, [role, page, size, searchQuery, reloadTick]);
+
+  useEffect(() => {
+    if (role !== "ADMIN") return;
+    let cancelled = false;
+    (async () => {
+      try {
+        const params = new URLSearchParams({ status: "MANUAL_PENDING", page: "1", size: "50" });
+        const res = await fetch(`/api/v1/reports/payout?${params.toString()}`, { cache: "no-store" });
+        const data = await res.json();
+        if (!cancelled && res.ok) {
+          setManualRequests(Array.isArray(data?.records) ? data.records : []);
+        }
+      } catch {}
+    })();
+    return () => {
+      cancelled = true;
+    };
+  }, [role]);
+
+  async function handleManualAction(refId, action) {
+    if (!refId) return;
+    setManualBusyRef(refId);
+    setMessage("");
+    try {
+      const res = await fetch("/api/v1/payout/manual-request-action", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ refId, action }),
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        setMessage(data?.message || `Failed to ${String(action || "").toLowerCase()} request.`);
+        return;
+      }
+      setMessage(data?.message || `Request ${String(action || "").toLowerCase()}d successfully.`);
+      setManualRequests((prev) => prev.filter((r) => r.clientRefNo !== refId));
+      setReloadTick((v) => v + 1);
+    } catch {
+      setMessage(`Failed to ${String(action || "").toLowerCase()} request.`);
+    } finally {
+      setManualBusyRef("");
+    }
+  }
 
   const displayRows = useMemo(() => rows, [rows]);
 
@@ -248,6 +294,63 @@ export default function PayoutWalletPage() {
       ) : null}
 
       <div className="rounded-2xl border border-slate-200 bg-white p-4">
+        <div className="mb-4 rounded-xl border border-amber-200 bg-amber-50 p-3">
+          <h3 className="text-sm font-semibold text-amber-900">Manual Payout Approval Queue</h3>
+          <div className="mt-2 overflow-x-auto rounded-lg border border-amber-200 bg-white">
+            <table className="min-w-full text-xs">
+              <thead className="bg-amber-100 text-amber-900">
+                <tr>
+                  <th className="px-2 py-2 text-left">Ref ID</th>
+                  <th className="px-2 py-2 text-left">Merchant</th>
+                  <th className="px-2 py-2 text-left">Amount</th>
+                  <th className="px-2 py-2 text-left">Charge</th>
+                  <th className="px-2 py-2 text-left">GST</th>
+                  <th className="px-2 py-2 text-left">Created</th>
+                  <th className="px-2 py-2 text-left">Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                {manualRequests.length === 0 ? (
+                  <tr>
+                    <td colSpan={7} className="px-2 py-3 text-center text-slate-500">No manual payout requests pending.</td>
+                  </tr>
+                ) : (
+                  manualRequests.map((row) => (
+                    <tr key={row.clientRefNo} className="border-t border-amber-100">
+                      <td className="px-2 py-2">{row.clientRefNo}</td>
+                      <td className="px-2 py-2">{row.merchantId}</td>
+                      <td className="px-2 py-2">{formatMoney(row.amount)}</td>
+                      <td className="px-2 py-2">{formatMoney(row.charge)}</td>
+                      <td className="px-2 py-2">{formatMoney(row.gst)}</td>
+                      <td className="px-2 py-2">{formatDateTime(row.createdAt)}</td>
+                      <td className="px-2 py-2">
+                        <div className="flex items-center gap-1">
+                          <button
+                            type="button"
+                            disabled={manualBusyRef === row.clientRefNo}
+                            onClick={() => handleManualAction(row.clientRefNo, "APPROVE")}
+                            className="rounded-md bg-emerald-600 px-2 py-1 text-white disabled:opacity-60"
+                          >
+                            Approve
+                          </button>
+                          <button
+                            type="button"
+                            disabled={manualBusyRef === row.clientRefNo}
+                            onClick={() => handleManualAction(row.clientRefNo, "REJECT")}
+                            className="rounded-md bg-rose-600 px-2 py-1 text-white disabled:opacity-60"
+                          >
+                            Reject
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  ))
+                )}
+              </tbody>
+            </table>
+          </div>
+        </div>
+
         <div className="flex flex-wrap items-center justify-between gap-3 rounded-xl border border-slate-200 bg-slate-50 p-3">
           <div className="flex flex-wrap items-center gap-2">
             <button type="button" className="rounded-lg border border-slate-300 bg-white px-4 py-1.5 text-indigo-600">Copy</button>

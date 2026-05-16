@@ -31,6 +31,7 @@ model Merchant {
   companyWebsite  String   @default("")
   officeAddress   String   @default("")
   status          String   @default("ACTIVE")
+  payoutMode      String   @default("MANUAL")
   createdAt       DateTime @default(now())
   updatedAt       DateTime @updatedAt
 

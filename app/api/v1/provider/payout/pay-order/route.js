@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { createProviderPayoutOrder, getOpenMoneyConfig } from "@/lib/payvision";
+import { createProviderPayoutOrder, getProviderConfig } from "@/lib/payvision";
 import { withApiLogging } from "@/lib/api-logger";
 import { decodeJwt } from "jose";
 import { prisma } from "@/lib/prisma";
@@ -71,14 +71,6 @@ function resolveMerchantCommissionSettingDelegate() {
   return delegate;
 }
 
-function resolveMerchantDelegate() {
-  const delegate = prisma?.merchant;
-  if (!delegate || typeof delegate.findUnique !== "function") {
-    return null;
-  }
-  return delegate;
-}
-
 function asPositiveAmount(value) {
   const n = Number(value);
   return Number.isFinite(n) && n > 0 ? n : 0;
@@ -141,7 +133,7 @@ async function generateUniqueRefId(payoutOrder) {
 
 const postHandler = async (req) => {
   try {
-    const config = getOpenMoneyConfig();
+    const config = getProviderConfig();
     const rawBody = await req.text();
     let body = {};
     try {
@@ -179,7 +171,7 @@ const postHandler = async (req) => {
     const tokenRow = await merchantApiToken.findFirst({
       where: {
         token: incomingToken,
-        provider: "OPENMONEY",
+        provider: "PRIMARY",
         expiresAt: { gt: new Date() },
       },
       orderBy: { createdAt: "desc" },
@@ -214,13 +206,6 @@ const postHandler = async (req) => {
         { status: 500 },
       );
     }
-    const merchantDelegate = resolveMerchantDelegate();
-    if (!merchantDelegate) {
-      return NextResponse.json(
-        { message: "Prisma client is stale. Please restart server and run prisma generate." },
-        { status: 500 },
-      );
-    }
 
     const RefID = await generateUniqueRefId(payoutOrder);
     const amount = asPositiveAmount(body?.Amount ?? body?.amount);
@@ -233,7 +218,7 @@ const postHandler = async (req) => {
     const commissionRule = await merchantCommissionSetting.findFirst({
       where: {
         merchantId,
-        provider: "OPENMONEY",
+        provider: "PRIMARY",
         commissionType: "PAYOUT",
         fromAmount: { lte: amount },
         toAmount: { gte: amount },
@@ -252,11 +237,6 @@ const postHandler = async (req) => {
       commissionPercent,
       gstPercent,
     });
-    const merchant = await merchantDelegate.findUnique({
-      where: { merchantId },
-      select: { payoutMode: true },
-    });
-    const payoutMode = String(merchant?.payoutMode || "MANUAL").toUpperCase() === "AUTO" ? "AUTO" : "MANUAL";
 
     const wallet = await merchantWalletBalance.findUnique({
       where: { merchantId },
@@ -295,75 +275,6 @@ const postHandler = async (req) => {
       BankName: String(body?.BankName || "").trim(),
     };
 
-    if (payoutMode === "MANUAL") {
-      await payoutOrder.upsert({
-        where: { clientRefNo: RefID },
-        create: {
-          merchantId,
-          clientRefNo: RefID,
-          amount: deduction.amount,
-          charge: deduction.commissionAmount,
-          gst: deduction.gstAmount,
-          balance: deduction.totalDeduction,
-          customerName: String(providerPayload.HolderName || "Beneficiary"),
-          customerPhone: mobile || "0000000000",
-          customerEmail: config.email,
-          provider: "OPENMONEY",
-          providerRef: RefID,
-          paymentUrl: "",
-          qrString: "",
-          providerRaw: JSON.stringify({
-            type: "PAYOUT",
-            flow: "MANUAL_APPROVAL",
-            payOrderRequest: providerPayload,
-            commission: {
-              commissionPercent,
-              gstPercent,
-              commissionAmount: deduction.commissionAmount,
-              gstAmount: deduction.gstAmount,
-              totalDeduction: deduction.totalDeduction,
-            },
-          }),
-          status: "MANUAL_PENDING",
-        },
-        update: {
-          amount: deduction.amount,
-          charge: deduction.commissionAmount,
-          gst: deduction.gstAmount,
-          balance: deduction.totalDeduction,
-          customerName: String(providerPayload.HolderName || "Beneficiary"),
-          customerPhone: mobile || "0000000000",
-          providerRef: RefID,
-          providerRaw: JSON.stringify({
-            type: "PAYOUT",
-            flow: "MANUAL_APPROVAL",
-            payOrderRequest: providerPayload,
-            commission: {
-              commissionPercent,
-              gstPercent,
-              commissionAmount: deduction.commissionAmount,
-              gstAmount: deduction.gstAmount,
-              totalDeduction: deduction.totalDeduction,
-            },
-          }),
-          status: "MANUAL_PENDING",
-        },
-      });
-
-      return NextResponse.json(
-        {
-          success: true,
-          message: "Your payout request is under process. Kindly wait.",
-          refId: RefID,
-          status: "MANUAL_PENDING",
-        },
-        {
-          status: 201,
-          headers: { "x-payvision-refid": RefID },
-        },
-      );
-    }
-
     const upstream = await createProviderPayoutOrder(providerPayload);
 
     const openMoneyStatus = Number(
@@ -379,7 +290,7 @@ const postHandler = async (req) => {
           message: firstNonEmpty(
             upstream.data?.message,
             upstream.data?.data?.message,
-            "Payout request rejected by OpenMoney",
+            "Payout request rejected by Provider",
           ),
           providerResponse: upstream.data,
         },
@@ -452,7 +363,7 @@ const postHandler = async (req) => {
           customerEmail: config.email,
           txnId: providerTxnId || "",
           bankRrn: bankRrn || "",
-          provider: "OPENMONEY",
+          provider: "PRIMARY",
           providerRef: providerRef || RefID,
           paymentUrl: "",
           qrString: "",
@@ -480,7 +391,7 @@ const postHandler = async (req) => {
           customerPhone: mobile || "0000000000",
           txnId: providerTxnId || undefined,
           bankRrn: bankRrn || undefined,
-          provider: "OPENMONEY",
+          provider: "PRIMARY",
           providerRef: providerRef || RefID,
           status,
           providerRaw: JSON.stringify({
@@ -532,4 +443,5 @@ const postHandler = async (req) => {
   }
 };
 
-export const POST = withApiLogging("openmoney/payout/pay-order:POST", postHandler);
+export const POST = withApiLogging("provider/payout/pay-order:POST", postHandler);
+

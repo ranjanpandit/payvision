@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { checkProviderStatus, getOpenMoneyConfig } from "@/lib/payvision";
+import { checkProviderStatus, getProviderConfig } from "@/lib/payvision";
 import { withApiLogging } from "@/lib/api-logger";
 import { prisma } from "@/lib/prisma";
 
@@ -63,7 +63,7 @@ function resolvePayoutOrderDelegate() {
 
 const postHandler = async (req) => {
   try {
-    getOpenMoneyConfig();
+    getProviderConfig();
     const rawBody = await req.text();
     let body = {};
     try {
@@ -99,41 +99,6 @@ const postHandler = async (req) => {
         { message: "Prisma client is stale. Please restart server and run prisma generate." },
         { status: 500 },
       );
-    }
-
-    const localOrder = await payoutOrder.findUnique({
-      where: { clientRefNo: RefId },
-      select: {
-        clientRefNo: true,
-        merchantId: true,
-        status: true,
-        txnId: true,
-        bankRrn: true,
-        createdAt: true,
-        updatedAt: true,
-      },
-    });
-
-    if (localOrder) {
-      const localStatus = String(localOrder.status || "").toUpperCase();
-      if (localStatus === "MANUAL_PENDING") {
-        return NextResponse.json({
-          success: true,
-          RefId,
-          status: "PENDING",
-          message: "Your payout request is under process. Kindly wait.",
-          source: "LOCAL_MANUAL_QUEUE",
-        });
-      }
-      if (localStatus === "MANUAL_REJECTED") {
-        return NextResponse.json({
-          success: true,
-          RefId,
-          status: "FAILED",
-          message: "Payout request was not processed.",
-          source: "LOCAL_MANUAL_QUEUE",
-        });
-      }
     }
 
     const result = await checkProviderStatus({ RefId, Service_Id });
@@ -300,4 +265,5 @@ const postHandler = async (req) => {
   }
 };
 
-export const POST = withApiLogging("openmoney/payout/status-check:POST", postHandler);
+export const POST = withApiLogging("provider/payout/status-check:POST", postHandler);
+

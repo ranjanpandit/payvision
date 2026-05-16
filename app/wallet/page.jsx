@@ -36,6 +36,9 @@ function deriveAccounts(rows) {
         acType: String(req?.AccountType||"").trim(),
         refId: String(req?.RefID||row?.clientRefNo||"").trim(),
         status: String(row?.status||"PENDING").trim(),
+        displayStatus: ["MANUAL_PENDING", "MANUAL_REJECTED"].includes(String(row?.status || "").trim().toUpperCase())
+          ? "PENDING"
+          : String(row?.status || "PENDING").trim(),
       }];
     } catch { return []; }
   });
@@ -182,7 +185,8 @@ export default function WalletPage() {
 
       if (!payRes.ok) { setMessage(payData?.message||"Payout request failed."); return; }
       setLastRefId(generatedRefId); setLastStatusPayload(null);
-      setMessage(`Payout request submitted. RefID: ${generatedRefId||"-"}`);
+      const nextStatus = String(payData?.status || "").toUpperCase();
+      setMessage(`Your payout request is under process. Kindly wait. RefID: ${generatedRefId || "-"}`);
       setForm(p=>({...p,amount:""}));
       setFormErrors({});
       await loadBalance(selectedMerchantId);
@@ -233,10 +237,10 @@ export default function WalletPage() {
                     <td className="px-3 py-2 font-mono text-xs">{row.accountNumber}</td>
                     <td className="px-3 py-2 capitalize">{row.acType}</td>
                     <td className="px-3 py-2">
-                      <span className={`rounded-full px-2 py-0.5 text-xs font-semibold ${row.status==="SUCCESS"?"bg-emerald-100 text-emerald-700":row.status==="FAILED"?"bg-red-100 text-red-700":"bg-amber-100 text-amber-700"}`}>{row.status}</span>
+                      <span className={`rounded-full px-2 py-0.5 text-xs font-semibold ${row.displayStatus==="SUCCESS"?"bg-emerald-100 text-emerald-700":row.displayStatus==="FAILED"?"bg-red-100 text-red-700":"bg-amber-100 text-amber-700"}`}>{row.displayStatus}</span>
                     </td>
                     <td className="px-3 py-2">
-                      <button type="button" onClick={()=>checkPayoutStatus(row.refId)} disabled={!row.refId||statusBusyRef===row.refId}
+                      <button type="button" onClick={()=>checkPayoutStatus(row.refId)} disabled={!row.refId||statusBusyRef===row.refId||row.status==="MANUAL_PENDING"||row.status==="MANUAL_REJECTED"}
                         className="rounded-lg bg-slate-700 px-2 py-1 text-xs text-white disabled:opacity-50">
                         {statusBusyRef===row.refId?"...":"Refresh"}
                       </button>

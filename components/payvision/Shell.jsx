@@ -218,7 +218,7 @@ export default function Shell({ title, breadcrumb, children }) {
   return (
     <div className="min-h-screen flex bg-slate-100">
       {/* Desktop sidebar */}
-      <aside className="hidden md:flex w-64 flex-col bg-[#0a1628] shrink-0">
+      <aside className="hidden md:flex w-64 h-screen sticky top-0 flex-col bg-[#0a1628] shrink-0">
         <SidebarContent />
       </aside>
 
@@ -226,7 +226,7 @@ export default function Shell({ title, breadcrumb, children }) {
       {sidebarOpen && (
         <div className="md:hidden fixed inset-0 z-40 flex">
           <div className="fixed inset-0 bg-black/60 backdrop-blur-sm" onClick={() => setSidebarOpen(false)}/>
-          <aside className="relative z-50 w-64 flex flex-col bg-[#0a1628] h-full shadow-2xl">
+          <aside className="relative z-50 w-64 h-screen flex flex-col bg-[#0a1628] shadow-2xl">
             <SidebarContent />
           </aside>
         </div>
