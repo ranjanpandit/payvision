@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { getSessionUserFromCookies } from "@/lib/auth";
 import { withApiLogging } from "@/lib/api-logger";
-import { createProviderPayoutOrder } from "@/lib/payvision";
+import { createProviderPayoutOrder } from "@/lib/zixpay";
 
 function round2(value) {
   const n = Number(value);
@@ -176,4 +176,5 @@ const postHandler = async (req) => {
 };
 
 export const POST = withApiLogging("payout/manual-request-action:POST", postHandler);
+
 

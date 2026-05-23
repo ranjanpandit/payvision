@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { getSessionUserFromCookies } from "@/lib/auth";
-import { getProviderBalance } from "@/lib/payvision";
+import { getProviderBalance } from "@/lib/zixpay";
 import { withApiLogging } from "@/lib/api-logger";
 
 export const runtime = "nodejs";
@@ -106,3 +106,4 @@ const getHandler = async (req) => {
 };
 
 export const GET = withApiLogging("dashboard/stats:GET", getHandler);
+

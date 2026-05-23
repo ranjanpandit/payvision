@@ -1,5 +1,5 @@
 {
-  "name": "payvision",
+  "name": "ZIXPAY",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -28,3 +28,4 @@
     "tailwindcss": "^3.4.17"
   }
 }
+

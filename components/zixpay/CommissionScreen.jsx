@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import Shell from "@/components/payvision/Shell";
+import Shell from "@/components/zixpay/Shell";
 
 const entryOptions = [10, 25, 50, 100];
 const providerOptions = ["OPENMONEY"];
@@ -463,3 +463,4 @@ export default function CommissionScreen({ commissionType = "PAYIN" }) {
     </Shell>
   );
 }
+

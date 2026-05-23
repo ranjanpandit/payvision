@@ -1,7 +1,7 @@
 "use client";
 import { useCallback, useEffect, useState } from "react";
 import Link from "next/link";
-import Shell from "@/components/payvision/Shell";
+import Shell from "@/components/zixpay/Shell";
 
 function fmt(v) { return Number(v||0).toLocaleString("en-IN",{minimumFractionDigits:2,maximumFractionDigits:2}); }
 function fmtTime(iso) {
@@ -128,7 +128,7 @@ export default function DashboardPage() {
           <div>
             <p className="text-white/60 text-sm">{greeting} 👋</p>
             <h2 className="text-xl font-bold text-white mt-0.5">
-              {isClient ? "Welcome to PayVision Merchant Portal" : "PayVision Admin Console"}
+              {isClient ? "Welcome to ZIXPAY Merchant Portal" : "ZIXPAY Admin Console"}
             </h2>
             <p className="text-white/40 text-xs mt-1">
               {new Date().toLocaleDateString("en-IN",{weekday:"long",day:"numeric",month:"long",year:"numeric"})}
@@ -355,3 +355,4 @@ export default function DashboardPage() {
     </Shell>
   );
 }
+

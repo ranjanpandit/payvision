@@ -1,4 +1,4 @@
-import Shell from "@/components/payvision/Shell";
+import Shell from "@/components/zixpay/Shell";
 
 export default function ApiCredentialsPage() {
   return (
@@ -11,3 +11,4 @@ export default function ApiCredentialsPage() {
     </Shell>
   );
 }
+

@@ -1,7 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import Shell from "@/components/payvision/Shell";
+import Shell from "@/components/zixpay/Shell";
 
 const initialForm = {
   firstName: "",
@@ -460,3 +460,4 @@ export default function NewMerchantRegistrationPage() {
     </Shell>
   );
 }
+

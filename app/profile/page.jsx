@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Shell from "@/components/payvision/Shell";
+import Shell from "@/components/zixpay/Shell";
 
 const initialForm = {
   firstName: "", lastName: "", dob: "", mobile: "",
@@ -281,3 +281,4 @@ export default function ProfilePage() {
     </Shell>
   );
 }
+

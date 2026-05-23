@@ -28,13 +28,13 @@ function getCommissionPrisma() {
   if (hasCommissionDelegate(prisma)) return prisma;
 
   const globalForCommission = globalThis;
-  if (hasCommissionDelegate(globalForCommission.__PAYVISION_COMMISSION_PRISMA__)) {
-    return globalForCommission.__PAYVISION_COMMISSION_PRISMA__;
+  if (hasCommissionDelegate(globalForCommission.__ZIXPAY_COMMISSION_PRISMA__)) {
+    return globalForCommission.__ZIXPAY_COMMISSION_PRISMA__;
   }
 
   const fresh = createFreshPrismaClient();
   if (process.env.NODE_ENV !== "production") {
-    globalForCommission.__PAYVISION_COMMISSION_PRISMA__ = fresh;
+    globalForCommission.__ZIXPAY_COMMISSION_PRISMA__ = fresh;
   }
   return fresh;
 }
@@ -253,3 +253,4 @@ const deleteHandler = async (req) => {
 export const GET = withApiLogging("commission:GET", getHandler);
 export const POST = withApiLogging("commission:POST", postHandler);
 export const DELETE = withApiLogging("commission:DELETE", deleteHandler);
+

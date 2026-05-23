@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import Shell from "@/components/payvision/Shell";
+import Shell from "@/components/zixpay/Shell";
 
 function StrengthBar({ password }) {
   const checks = [/.{8,}/, /[A-Z]/, /[a-z]/, /[0-9]/, /[^A-Za-z0-9]/];
@@ -154,3 +154,4 @@ export default function ChangePasswordPage() {
     </Shell>
   );
 }
+

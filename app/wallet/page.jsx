@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
-import Shell from "@/components/payvision/Shell";
+import Shell from "@/components/zixpay/Shell";
 
 const paymentModes = [
   { value: "1", label: "IMPS" },
@@ -181,7 +181,7 @@ export default function WalletPage() {
       const payRes = await fetch("/api/v1/payout/create-order",{method:"POST",headers:{"Content-Type":"application/json","Authorization":`Bearer ${bearer}`},body:JSON.stringify(payload)});
       const payText = await payRes.text();
       const payData = parseText(payText);
-      const generatedRefId = String(payRes.headers.get("x-payvision-refid")||payData?.data?.ref_id||payData?.ref_id||payData?.RefID||"").trim();
+      const generatedRefId = String(payRes.headers.get("x-zixpay-refid")||payData?.data?.ref_id||payData?.ref_id||payData?.RefID||"").trim();
 
       if (!payRes.ok) { setMessage(payData?.message||"Payout request failed."); return; }
       setLastRefId(generatedRefId); setLastStatusPayload(null);
@@ -349,3 +349,4 @@ export default function WalletPage() {
     </Shell>
   );
 }
+

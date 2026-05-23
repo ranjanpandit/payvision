@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import Shell from "@/components/payvision/Shell";
+import Shell from "@/components/zixpay/Shell";
 
 function PinInput({ label, hint, fieldKey, value, showPin, error, confirmMatch, onChange, onToggleShow }) {
   return (
@@ -142,3 +142,4 @@ export default function ChangeTpinPage() {
     </Shell>
   );
 }
+

@@ -2,7 +2,7 @@
 
 import { Suspense, useMemo, useState } from "react";
 import { useSearchParams } from "next/navigation";
-import Shell from "@/components/payvision/Shell";
+import Shell from "@/components/zixpay/Shell";
 
 function formatDateTime(value) {
   if (!value) return "-";
@@ -261,3 +261,4 @@ export default function PayinWalletHistoryPage() {
     </Suspense>
   );
 }
+

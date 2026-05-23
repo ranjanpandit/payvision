@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { decodeJwt } from "jose";
 import { prisma } from "@/lib/prisma";
 import { getSessionUserFromCookies } from "@/lib/auth";
-import { getOpenMoneyConfig } from "@/lib/payvision";
+import { getOpenMoneyConfig } from "@/lib/zixpay";
 import { withApiLogging } from "@/lib/api-logger";
 
 export const runtime = "nodejs";
@@ -134,3 +134,4 @@ const postHandler = async (req) => {
 };
 
 export const POST = withApiLogging("openmoney/auth/client-token:POST", postHandler);
+

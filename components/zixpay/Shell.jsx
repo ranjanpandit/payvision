@@ -160,7 +160,7 @@ export default function Shell({ title, breadcrumb, children }) {
           </svg>
         </div>
         <div className="ml-3">
-          <p className="text-lg font-bold text-white leading-tight">PayVision</p>
+          <p className="text-lg font-bold text-white leading-tight">ZIXPAY</p>
           <p className="text-xs text-slate-400">Merchant Platform</p>
         </div>
       </div>
@@ -264,3 +264,4 @@ export default function Shell({ title, breadcrumb, children }) {
     </div>
   );
 }
+

@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
-import Shell from "@/components/payvision/Shell";
+import Shell from "@/components/zixpay/Shell";
 
 function copyToClipboard(text) {
   if (navigator.clipboard && window.isSecureContext) return navigator.clipboard.writeText(String(text));
@@ -212,3 +212,4 @@ export default function ApiSettingsPage() {
     </Shell>
   );
 }
+

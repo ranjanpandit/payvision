@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import Shell from "@/components/payvision/Shell";
+import Shell from "@/components/zixpay/Shell";
 
 const emptyEditForm = {
   merchantId: "",
@@ -430,3 +430,4 @@ export default function ActiveMerchantPage() {
     </Shell>
   );
 }
+

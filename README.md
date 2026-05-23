@@ -1,4 +1,4 @@
-# PayVision
+# ZIXPAY
 
 Standalone starter dashboard project.
 
@@ -10,5 +10,6 @@ Standalone starter dashboard project.
 
 ## Goal
 
-PayVision will act as a mediator between ecommerce merchants and OpenMoney.
-"# payvision" 
+ZIXPAY will act as a mediator between ecommerce merchants and OpenMoney.
+"# ZIXPAY" 
+

@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { createProviderPayoutOrder, getOpenMoneyConfig } from "@/lib/payvision";
+import { createProviderPayoutOrder, getOpenMoneyConfig } from "@/lib/zixpay";
 import { withApiLogging } from "@/lib/api-logger";
 import { decodeJwt } from "jose";
 import { prisma } from "@/lib/prisma";
@@ -359,7 +359,7 @@ const postHandler = async (req) => {
         },
         {
           status: 201,
-          headers: { "x-payvision-refid": RefID },
+          headers: { "x-zixpay-refid": RefID },
         },
       );
     }
@@ -385,7 +385,7 @@ const postHandler = async (req) => {
         },
         {
           status: 400,
-          headers: { "x-payvision-refid": RefID },
+          headers: { "x-zixpay-refid": RefID },
         },
       );
     }
@@ -512,9 +512,9 @@ const postHandler = async (req) => {
       status: upstream.status,
       headers: {
         "content-type": upstream.contentType,
-        "x-payvision-refid": RefID,
-        "x-payvision-total-deduction": String(deduction.totalDeduction),
-        "x-payvision-payout-balance": String(saveResult.payoutBalance),
+        "x-zixpay-refid": RefID,
+        "x-zixpay-total-deduction": String(deduction.totalDeduction),
+        "x-zixpay-payout-balance": String(saveResult.payoutBalance),
       },
     });
   } catch (error) {
@@ -533,3 +533,4 @@ const postHandler = async (req) => {
 };
 
 export const POST = withApiLogging("openmoney/payout/pay-order:POST", postHandler);
+

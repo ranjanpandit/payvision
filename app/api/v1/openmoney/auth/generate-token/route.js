@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { getOpenMoneyConfig } from "@/lib/payvision";
+import { getOpenMoneyConfig } from "@/lib/zixpay";
 import { prisma } from "@/lib/prisma";
 import { decodeJwt } from "jose";
 import { withApiLogging } from "@/lib/api-logger";
@@ -77,7 +77,7 @@ const postHandler = async (req) => {
         accept: "*/*",
         "Content-Type": "application/json",
       },
-      // Always use PayVision provider credentials for OpenMoney integration.
+      // Always use ZIXPAY provider credentials for OpenMoney integration.
       body: JSON.stringify({
         mid: config.mid,
         email: config.email,
@@ -130,3 +130,4 @@ const postHandler = async (req) => {
 };
 
 export const POST = withApiLogging("openmoney/auth/generate-token:POST", postHandler);
+

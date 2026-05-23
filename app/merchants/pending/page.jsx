@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import Shell from "@/components/payvision/Shell";
+import Shell from "@/components/zixpay/Shell";
 
 function formatDate(iso) {
   if (!iso) return "-";
@@ -173,4 +173,5 @@ export default function PendingMerchantPage() {
     </Shell>
   );
 }
+
 

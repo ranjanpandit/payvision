@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import Shell from "@/components/payvision/Shell";
+import Shell from "@/components/zixpay/Shell";
 
 const initialFilters = {
   fromDate: "",
@@ -326,3 +326,4 @@ export default function PayingSettlementReportPage() {
     </Shell>
   );
 }
+

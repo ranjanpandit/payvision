@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
-import Shell from "@/components/payvision/Shell";
+import Shell from "@/components/zixpay/Shell";
 
 const entryOptions = [10, 25, 50, 100];
 
@@ -666,3 +666,4 @@ export default function PayoutWalletPage() {
     </Shell>
   );
 }
+

@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 
 // Fintech SVG illustration - payment flow themed
-function PayVisionIllustration() {
+function ZIXPAYIllustration() {
   return (
     <svg viewBox="0 0 400 320" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full max-w-xs mx-auto">
       {/* Background circles */}
@@ -198,7 +198,7 @@ export default function LoginPage() {
               </svg>
             </div>
             <div>
-              <p className="text-2xl font-bold text-white">PayVision</p>
+              <p className="text-2xl font-bold text-white">ZIXPAY</p>
               <p className="text-xs text-white/60">Merchant Payment Platform</p>
             </div>
           </div>
@@ -208,7 +208,7 @@ export default function LoginPage() {
             <h2 className="text-3xl font-bold text-white mb-2">Payments Made Simple</h2>
             <p className="text-white/70 text-sm max-w-xs mb-8">Accept, transfer, and manage money with confidence. Built for modern businesses.</p>
 
-            <PayVisionIllustration />
+            <ZIXPAYIllustration />
 
             {/* Stats */}
             <div className="mt-8 grid grid-cols-3 gap-6 w-full max-w-sm">
@@ -243,7 +243,7 @@ export default function LoginPage() {
             <div className="h-16 w-16 rounded-2xl bg-gradient-to-br from-indigo-600 to-emerald-600 flex items-center justify-center mb-3 shadow-lg">
               <span className="text-2xl font-bold text-white">PV</span>
             </div>
-            <h1 className="text-2xl font-bold text-slate-900">PayVision</h1>
+            <h1 className="text-2xl font-bold text-slate-900">ZIXPAY</h1>
             <p className="text-sm text-slate-500 mt-1">Merchant Payment Platform</p>
           </div>
 
@@ -279,7 +279,7 @@ export default function LoginPage() {
                       </svg>
                     </span>
                     <input type="email" value={email} onChange={e => setEmail(e.target.value)}
-                      placeholder="admin@payvision.com" autoComplete="email"
+                      placeholder="admin@ZIXPAY.com" autoComplete="email"
                       className="w-full rounded-xl border border-slate-200 bg-slate-50 pl-10 pr-4 py-3 text-sm outline-none focus:ring-2 focus:ring-indigo-500 focus:bg-white transition-colors"/>
                   </div>
                 </div>
@@ -373,10 +373,11 @@ export default function LoginPage() {
           </div>
 
           <p className="mt-5 text-center text-xs text-slate-400">
-            © {new Date().getFullYear()} PayVision Technologies. All rights reserved.
+            © {new Date().getFullYear()} ZIXPAY Technologies. All rights reserved.
           </p>
         </div>
       </div>
     </main>
   );
 }
+

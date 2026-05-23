@@ -1,5 +1,6 @@
-import CommissionScreen from "@/components/payvision/CommissionScreen";
+import CommissionScreen from "@/components/zixpay/CommissionScreen";
 
 export default function PgCommissionPage() {
   return <CommissionScreen commissionType="PAYIN" />;
 }
+

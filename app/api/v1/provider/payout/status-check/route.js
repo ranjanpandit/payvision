@@ -1,15 +1,15 @@
 import { NextResponse } from "next/server";
-import { checkProviderStatus, getProviderConfig } from "@/lib/payvision";
+import { checkProviderStatus, getProviderConfig } from "@/lib/zixpay";
 import { withApiLogging } from "@/lib/api-logger";
 import { prisma } from "@/lib/prisma";
 
 export const runtime = "nodejs";
-const globalForPayvision = globalThis;
+const globalForZIXPAY = globalThis;
 const statusSignatureCache =
-  globalForPayvision.__PAYVISION_STATUS_SIGNATURE_CACHE__ ||
+  globalForZIXPAY.__ZIXPAY_STATUS_SIGNATURE_CACHE__ ||
   new Map();
 
-globalForPayvision.__PAYVISION_STATUS_SIGNATURE_CACHE__ = statusSignatureCache;
+globalForZIXPAY.__ZIXPAY_STATUS_SIGNATURE_CACHE__ = statusSignatureCache;
 
 const MAX_CACHE_ITEMS = 5000;
 
@@ -266,4 +266,5 @@ const postHandler = async (req) => {
 };
 
 export const POST = withApiLogging("provider/payout/status-check:POST", postHandler);
+
 

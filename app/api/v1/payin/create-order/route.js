@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { createProviderToken, getOpenMoneyConfig } from "@/lib/payvision";
+import { createProviderToken, getOpenMoneyConfig } from "@/lib/zixpay";
 import { prisma } from "@/lib/prisma";
 import { getSessionUserFromCookies } from "@/lib/auth";
 import { withApiLogging } from "@/lib/api-logger";
@@ -121,3 +121,4 @@ const postHandler = async (req) => {
 };
 
 export const POST = withApiLogging("payin/create-order:POST", postHandler);
+

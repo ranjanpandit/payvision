@@ -1,4 +1,4 @@
-import Shell from "@/components/payvision/Shell";
+import Shell from "@/components/zixpay/Shell";
 
 export default function SecurityAmountReportPage() {
   return (
@@ -9,4 +9,5 @@ export default function SecurityAmountReportPage() {
     </Shell>
   );
 }
+
 

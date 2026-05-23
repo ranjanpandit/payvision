@@ -1,8 +1,8 @@
 import './globals.css';
 
 export const metadata = {
-  title: 'PayVision - Merchant Platform',
-  description: 'PayVision Payment Gateway - secure, fast merchant portal',
+  title: 'ZixPay - Merchant Platform',
+  description: 'ZixPay Payment Gateway - secure, fast merchant portal',
   icons: {
     icon: [{ url: '/favicon.svg', type: 'image/svg+xml' }],
     apple: '/favicon.svg',
@@ -20,3 +20,4 @@ export default function RootLayout({ children }) {
     </html>
   );
 }
+
